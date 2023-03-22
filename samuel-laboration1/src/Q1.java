@@ -36,6 +36,13 @@ public class Q1 {
         var inputFile = "samuel-laboration1/Q1-input.txt";
         try {
             int[][] maze = loadMaze(inputFile);
+            SamuelFixedSizeStack<Integer> stack = new SamuelFixedSizeStack<>(5);
+            stack.push(1);
+            stack.push(2);
+            stack.push(23);
+            System.out.println(stack.pop());
+
+
 
         } catch (FileNotFoundException | IllegalArgumentException e) {
             System.out.println(e);
