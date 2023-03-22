@@ -32,15 +32,26 @@ public class Q1 {
         }
     }
 
+    public static void navigateMaze(int[][] maze) {
+
+        Coordinate currentCoordinate= new Coordinate(0, 0);
+        boolean victoryCondition = currentCoordinate.X() == maze.length - 1 && currentCoordinate.Y() == maze[0].length;
+
+        SamuelFixedSizeStack<Coordinate> stack = new SamuelFixedSizeStack<>(5);
+        stack.push(new Coordinate(0, 0));
+
+//        while (!stack.isEmpty()) {
+//        currentCoordinate = new Coordinate(0, 0);
+//
+//        }
+
+    }
+
     public static void main(String[] args) {
         var inputFile = "samuel-laboration1/Q1-input.txt";
         try {
             int[][] maze = loadMaze(inputFile);
-            SamuelFixedSizeStack<Integer> stack = new SamuelFixedSizeStack<>(5);
-            stack.push(1);
-            stack.push(2);
-            stack.push(23);
-            System.out.println(stack.pop());
+            navigateMaze(maze);
 
 
 
