@@ -12,8 +12,10 @@ public class SamuelFixedSizeStack<T> {
     }
 
     public void push(T item) throws StackOverflowError {
-        if (top >= items.length)
+        if (top >= items.length) {
+            System.out.println(items.length);
             throw new StackOverflowError("The stack is full");
+        }
         else
             items[top] = item;
             top++;

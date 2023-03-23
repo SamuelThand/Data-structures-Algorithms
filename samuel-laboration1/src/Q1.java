@@ -32,27 +32,66 @@ public class Q1 {
         }
     }
 
-    public static void navigateMaze(int[][] maze) {
+    public static boolean navigateMaze(int[][] maze) {
 
-        Coordinate currentCoordinate= new Coordinate(0, 0);
-        boolean victoryCondition = currentCoordinate.X() == maze.length - 1 && currentCoordinate.Y() == maze[0].length;
+        Coordinate currentCoordinate = new Coordinate(0, 0);
+        SamuelFixedSizeStack<Coordinate> moves = new SamuelFixedSizeStack<>(50000000);
 
-        SamuelFixedSizeStack<Coordinate> stack = new SamuelFixedSizeStack<>(5);
-        stack.push(new Coordinate(0, 0));
+        moves.push(new Coordinate(0, 0)); // The starting position
 
-//        while (!stack.isEmpty()) {
-//        currentCoordinate = new Coordinate(0, 0);
-//
-//        }
+        while (!moves.isEmpty()) {
+            currentCoordinate = moves.pop();
+            boolean isOnTheLastRow = currentCoordinate.X() == (maze.length - 1);
+            boolean isOnTheLastColumn = currentCoordinate.Y() == (maze[0].length - 1);
+            boolean canGoUp = currentCoordinate.X() > 0 && maze[currentCoordinate.X()-1][currentCoordinate.Y()] == 1;
+            boolean canGoDown = currentCoordinate.X() < (maze.length - 1) && maze[currentCoordinate.X()+1][currentCoordinate.Y()] == 1;
+            boolean canGoLeft = currentCoordinate.Y() > 0 && maze[currentCoordinate.X()][currentCoordinate.Y()-1] == 1;
+            boolean canGoRight = currentCoordinate.Y() < (maze[0].length - 1) && maze[currentCoordinate.X()][currentCoordinate.Y()+1] == 1;
 
+            if (isOnTheLastRow && isOnTheLastColumn) {
+                maze[currentCoordinate.X()][currentCoordinate.Y()] = -1; // Marked as visited
+                return true;
+            }
+            else {
+                    maze[currentCoordinate.X()][currentCoordinate.Y()] = -1; // Marked as visited
+
+                    if (canGoRight)
+                        moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() + 1));
+                    if (canGoDown)
+                        moves.push(new Coordinate(currentCoordinate.X() + 1, currentCoordinate.Y()));
+                    if (canGoUp)
+                        moves.push(new Coordinate(currentCoordinate.X() - 1, currentCoordinate.Y()));
+                    if (canGoLeft)
+                        moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() - 1));
+            }
+        }
+
+        return false;
     }
 
     public static void main(String[] args) {
         var inputFile = "samuel-laboration1/Q1-input.txt";
         try {
             int[][] maze = loadMaze(inputFile);
-            navigateMaze(maze);
-
+            boolean success = navigateMaze(maze);
+            if (success) {
+                System.out.println("Found way");
+                for (int[] rows : maze) {
+                    for (int j = 0; j < maze[0].length; j++) {
+                        System.out.print(rows[j] + " ");
+                    }
+                    System.out.println();
+                }
+            }
+            else {
+                System.out.println("Did not find way");
+                for (int[] ints : maze) {
+                    for (int j = 0; j < maze[0].length; j++) {
+                        System.out.print(ints[j]);
+                    }
+                    System.out.println();
+                }
+            }
 
 
         } catch (FileNotFoundException | IllegalArgumentException e) {
