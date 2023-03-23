@@ -35,7 +35,9 @@ public class Q1 {
     public static boolean navigateMaze(int[][] maze) {
 
         Coordinate currentCoordinate = new Coordinate(0, 0);
-        SamuelFixedSizeStack<Coordinate> moves = new SamuelFixedSizeStack<>(50000000);
+        SamuelFixedSizeStack<Coordinate> moves = new SamuelFixedSizeStack<>(1);
+        int[][] visitedCoordinates;
+        int[][] coordinatesBacktrackedFrom;
 
         moves.push(new Coordinate(0, 0)); // The starting position
 
@@ -48,21 +50,61 @@ public class Q1 {
             boolean canGoLeft = currentCoordinate.Y() > 0 && maze[currentCoordinate.X()][currentCoordinate.Y()-1] == 1;
             boolean canGoRight = currentCoordinate.Y() < (maze[0].length - 1) && maze[currentCoordinate.X()][currentCoordinate.Y()+1] == 1;
 
+            boolean canBacktrackUp = currentCoordinate.X() > 0 && maze[currentCoordinate.X()-1][currentCoordinate.Y()] == -1;
+            boolean canBacktrackDown = currentCoordinate.X() < (maze.length - 1) && maze[currentCoordinate.X()+1][currentCoordinate.Y()] == -1;
+            boolean canBacktrackLeft = currentCoordinate.Y() > 0 && maze[currentCoordinate.X()][currentCoordinate.Y()-1] == -1;
+            boolean canBacktrackRight = currentCoordinate.Y() < (maze[0].length - 1) && maze[currentCoordinate.X()][currentCoordinate.Y()+1] == -1;
+
+            maze[currentCoordinate.X()][currentCoordinate.Y()] = -1; // Marked as visited
             if (isOnTheLastRow && isOnTheLastColumn) {
-                maze[currentCoordinate.X()][currentCoordinate.Y()] = -1; // Marked as visited
                 return true;
             }
+                    // backtrack or normal traversal
+                    //continue after each
             else {
-                    maze[currentCoordinate.X()][currentCoordinate.Y()] = -1; // Marked as visited
+                if (canGoRight) {
+                    moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() + 1));
+                    continue;
 
-                    if (canGoRight)
-                        moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() + 1));
-                    if (canGoDown)
-                        moves.push(new Coordinate(currentCoordinate.X() + 1, currentCoordinate.Y()));
-                    if (canGoUp)
-                        moves.push(new Coordinate(currentCoordinate.X() - 1, currentCoordinate.Y()));
-                    if (canGoLeft)
-                        moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() - 1));
+                } else if (canBacktrackRight) {
+                    moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() + 1));
+                    maze[currentCoordinate.X()][currentCoordinate.Y()] = 8;
+                    continue;
+                }
+
+                if (canGoDown) {
+                    moves.push(new Coordinate(currentCoordinate.X() + 1, currentCoordinate.Y()));
+                    continue;
+                } else if (canBacktrackDown) {
+                    moves.push(new Coordinate(currentCoordinate.X() + 1, currentCoordinate.Y()));
+                    maze[currentCoordinate.X()][currentCoordinate.Y()] = 8;
+                    continue;
+                }
+                if (canGoUp) {
+                    moves.push(new Coordinate(currentCoordinate.X() - 1, currentCoordinate.Y()));
+                    continue;
+                } else if (canBacktrackUp) {
+                    moves.push(new Coordinate(currentCoordinate.X() - 1, currentCoordinate.Y()));
+                    maze[currentCoordinate.X()][currentCoordinate.Y()] = 8;
+                    continue;
+                }
+                if (canGoLeft) {
+                    moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() - 1));
+                    continue;
+                } else if (canBacktrackLeft) {
+                    moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() - 1));
+                    maze[currentCoordinate.X()][currentCoordinate.Y()] = 8;
+                    continue;
+                }
+
+//                    if (canGoRight)
+//                        moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() + 1));
+//                    if (canGoDown)
+//                        moves.push(new Coordinate(currentCoordinate.X() + 1, currentCoordinate.Y()));
+//                    if (canGoUp)
+//                        moves.push(new Coordinate(currentCoordinate.X() - 1, currentCoordinate.Y()));
+//                    if (canGoLeft)
+//                        moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() - 1));
             }
         }
 
