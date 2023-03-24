@@ -49,7 +49,7 @@ public class Q1 {
     }
 
     public static boolean navigateMaze(int[][] maze) {
-        SamuelFixedSizeStack<Coordinate> moves = new SamuelFixedSizeStack<>(30);
+        SamuelFixedSizeStack<Q1Coordinate> moves = new SamuelFixedSizeStack<>(30);
         int[][] coordinatesBacktrackedFrom = new int[maze.length][maze[0].length];
 
         // Initialize coordinatesBacktrackedFrom with zeros
@@ -59,22 +59,22 @@ public class Q1 {
             }
         }
 
-        moves.push(new Coordinate(0, 0)); // The starting position
+        moves.push(new Q1Coordinate(0, 0)); // The starting position
 
         while (!moves.isEmpty()) {
-            Coordinate currentCoordinate = moves.pop();
-            maze[currentCoordinate.X()][currentCoordinate.Y()] = -1; // Marked as visited
+            Q1Coordinate currentQ1Coordinate = moves.pop();
+            maze[currentQ1Coordinate.X()][currentQ1Coordinate.Y()] = -1; // Marked as visited
 
-            boolean isOnTheLastRow = currentCoordinate.X() == (maze.length - 1);
-            boolean isOnTheLastColumn = currentCoordinate.Y() == (maze[0].length - 1);
-            boolean canGoUp = currentCoordinate.X() > 0 && maze[currentCoordinate.X()-1][currentCoordinate.Y()] == 1;
-            boolean canGoDown = currentCoordinate.X() < (maze.length - 1) && maze[currentCoordinate.X()+1][currentCoordinate.Y()] == 1;
-            boolean canGoLeft = currentCoordinate.Y() > 0 && maze[currentCoordinate.X()][currentCoordinate.Y()-1] == 1;
-            boolean canGoRight = currentCoordinate.Y() < (maze[0].length - 1) && maze[currentCoordinate.X()][currentCoordinate.Y()+1] == 1;
-            boolean canBacktrackUp = currentCoordinate.X() > 0 && maze[currentCoordinate.X()-1][currentCoordinate.Y()] == -1 && coordinatesBacktrackedFrom[currentCoordinate.X()-1][currentCoordinate.Y()] == 0;
-            boolean canBacktrackDown = currentCoordinate.X() < (maze.length - 1) && maze[currentCoordinate.X()+1][currentCoordinate.Y()] == -1 && coordinatesBacktrackedFrom[currentCoordinate.X()+1][currentCoordinate.Y()] == 0;
-            boolean canBacktrackLeft = currentCoordinate.Y() > 0 && maze[currentCoordinate.X()][currentCoordinate.Y()-1] == -1 && coordinatesBacktrackedFrom[currentCoordinate.X()][currentCoordinate.Y()-1] == 0;
-            boolean canBacktrackRight = currentCoordinate.Y() < (maze[0].length - 1) && maze[currentCoordinate.X()][currentCoordinate.Y()+1] == -1 && coordinatesBacktrackedFrom[currentCoordinate.X()][currentCoordinate.Y()+1] == 0;
+            boolean isOnTheLastRow = currentQ1Coordinate.X() == (maze.length - 1);
+            boolean isOnTheLastColumn = currentQ1Coordinate.Y() == (maze[0].length - 1);
+            boolean canGoUp = currentQ1Coordinate.X() > 0 && maze[currentQ1Coordinate.X()-1][currentQ1Coordinate.Y()] == 1;
+            boolean canGoDown = currentQ1Coordinate.X() < (maze.length - 1) && maze[currentQ1Coordinate.X()+1][currentQ1Coordinate.Y()] == 1;
+            boolean canGoLeft = currentQ1Coordinate.Y() > 0 && maze[currentQ1Coordinate.X()][currentQ1Coordinate.Y()-1] == 1;
+            boolean canGoRight = currentQ1Coordinate.Y() < (maze[0].length - 1) && maze[currentQ1Coordinate.X()][currentQ1Coordinate.Y()+1] == 1;
+            boolean canBacktrackUp = currentQ1Coordinate.X() > 0 && maze[currentQ1Coordinate.X()-1][currentQ1Coordinate.Y()] == -1 && coordinatesBacktrackedFrom[currentQ1Coordinate.X()-1][currentQ1Coordinate.Y()] == 0;
+            boolean canBacktrackDown = currentQ1Coordinate.X() < (maze.length - 1) && maze[currentQ1Coordinate.X()+1][currentQ1Coordinate.Y()] == -1 && coordinatesBacktrackedFrom[currentQ1Coordinate.X()+1][currentQ1Coordinate.Y()] == 0;
+            boolean canBacktrackLeft = currentQ1Coordinate.Y() > 0 && maze[currentQ1Coordinate.X()][currentQ1Coordinate.Y()-1] == -1 && coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()-1] == 0;
+            boolean canBacktrackRight = currentQ1Coordinate.Y() < (maze[0].length - 1) && maze[currentQ1Coordinate.X()][currentQ1Coordinate.Y()+1] == -1 && coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()+1] == 0;
 
             if (isOnTheLastRow && isOnTheLastColumn) {
                 paintPath(maze, coordinatesBacktrackedFrom);
@@ -83,30 +83,30 @@ public class Q1 {
             else {
                 boolean foundNewPath = false;
                 if (canGoLeft) {
-                    moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() - 1));
+                    moves.push(new Q1Coordinate(currentQ1Coordinate.X(), currentQ1Coordinate.Y() - 1));
                     foundNewPath = true;
                 } if (canGoUp) {
-                    moves.push(new Coordinate(currentCoordinate.X() - 1, currentCoordinate.Y()));
+                    moves.push(new Q1Coordinate(currentQ1Coordinate.X() - 1, currentQ1Coordinate.Y()));
                     foundNewPath = true;
                 } if (canGoDown) {
-                    moves.push(new Coordinate(currentCoordinate.X() + 1, currentCoordinate.Y()));
+                    moves.push(new Q1Coordinate(currentQ1Coordinate.X() + 1, currentQ1Coordinate.Y()));
                     foundNewPath = true;
                 } if (canGoRight) {
-                    moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() + 1));
+                    moves.push(new Q1Coordinate(currentQ1Coordinate.X(), currentQ1Coordinate.Y() + 1));
                     foundNewPath = true;
                 } if (!foundNewPath) {
                     if (canBacktrackLeft) {
-                        moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() - 1));
-                        coordinatesBacktrackedFrom[currentCoordinate.X()][currentCoordinate.Y()] = -1;
+                        moves.push(new Q1Coordinate(currentQ1Coordinate.X(), currentQ1Coordinate.Y() - 1));
+                        coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()] = -1;
                     } if (canBacktrackUp) {
-                        moves.push(new Coordinate(currentCoordinate.X() - 1, currentCoordinate.Y()));
-                        coordinatesBacktrackedFrom[currentCoordinate.X()][currentCoordinate.Y()] = -1;
+                        moves.push(new Q1Coordinate(currentQ1Coordinate.X() - 1, currentQ1Coordinate.Y()));
+                        coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()] = -1;
                     } if (canBacktrackDown) {
-                        moves.push(new Coordinate(currentCoordinate.X() + 1, currentCoordinate.Y()));
-                        coordinatesBacktrackedFrom[currentCoordinate.X()][currentCoordinate.Y()] = -1;
+                        moves.push(new Q1Coordinate(currentQ1Coordinate.X() + 1, currentQ1Coordinate.Y()));
+                        coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()] = -1;
                     } if (canBacktrackRight) {
-                        moves.push(new Coordinate(currentCoordinate.X(), currentCoordinate.Y() + 1));
-                        coordinatesBacktrackedFrom[currentCoordinate.X()][currentCoordinate.Y()] = -1;
+                        moves.push(new Q1Coordinate(currentQ1Coordinate.X(), currentQ1Coordinate.Y() + 1));
+                        coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()] = -1;
                     }
                 }
             }
