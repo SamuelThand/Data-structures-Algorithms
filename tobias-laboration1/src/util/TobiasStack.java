@@ -1,3 +1,5 @@
+package util;
+
 import java.util.EmptyStackException;
 
 /**
@@ -39,10 +41,10 @@ public class TobiasStack<T> {
      * @return true if the item was pushed, false otherwise
      */
     public boolean push(T item) {
-        if (top >= arraySize) {
+        if (++top >= arraySize) {
             resize();
         }
-        itemArray[++top] = item;
+        itemArray[top] = item;
         return true;
     }
 
