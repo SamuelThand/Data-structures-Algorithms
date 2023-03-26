@@ -1,15 +1,15 @@
 package Q2;
 
-import util.TobiasStack;
+import util.THStack;
 
 /**
  *
  */
 public class ParenthesisBalanceChecker {
-    TobiasStack<Character> stack;
+    THStack<Character> stack;
 
     public ParenthesisBalanceChecker() {
-        this.stack = new TobiasStack<>();
+        this.stack = new THStack<>();
     }
 
     public int isBalanced(String input) {

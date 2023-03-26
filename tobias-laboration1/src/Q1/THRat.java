@@ -1,20 +1,20 @@
 package Q1;
 
-import util.TobiasStack;
+import util.THStack;
 
-public class Rat {
+public class THRat {
     int[][] maze;
     int N;
-    TobiasStack<Node> path;
+    THStack<Node> path;
 
     private enum Direction {
         UP, DOWN, LEFT, RIGHT
     }
 
-    public Rat(int[][] maze) {
+    public THRat(int[][] maze) {
         this.maze = maze;
         this.N = maze.length;
-        this.path = new TobiasStack<>();
+        this.path = new THStack<>();
     }
 
     private boolean isSafe(int row, int col) {

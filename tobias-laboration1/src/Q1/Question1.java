@@ -16,7 +16,7 @@ public class Question1 {
             System.out.println("Error loading maze");
             exit(1);
         }
-        Rat rat = new Rat(maze);
+        THRat rat = new THRat(maze);
         if (rat.solveMaze()) {
             System.out.println("Path found");
             int[][] mazePath = rat.printMazePath();

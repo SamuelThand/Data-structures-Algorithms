@@ -1,18 +1,11 @@
-package util;
+package Q3;
 
 import java.util.EmptyStackException;
 
-/**
- * Generic stack implementation using an array.
- *
- * @param <T> The type of the items in the stack.
- *
- * @author Tobias
- */
-public class TobiasStack<T> {
-    private T[] itemArray;
+public class THFixedStack<T> {
+    private final T[] itemArray;
     private static final int DEFAULT_SIZE = 10;
-    private int arraySize;
+    private final int arraySize;
     private int top;
 
     /**
@@ -20,7 +13,7 @@ public class TobiasStack<T> {
      *
      * @param size size of the stack
      */
-    public TobiasStack(int size) {
+    public THFixedStack(int size) {
         this.arraySize = size;
         this.top = -1;
         this.itemArray = (T[]) new Object[size];
@@ -29,7 +22,7 @@ public class TobiasStack<T> {
     /**
      * Creates a new stack with the default size.
      */
-    public TobiasStack() {
+    public THFixedStack() {
         this(DEFAULT_SIZE);
     }
 
@@ -42,7 +35,7 @@ public class TobiasStack<T> {
      */
     public boolean push(T item) {
         if (++top >= arraySize) {
-            resize();
+            throw new StackOverflowError();
         }
         itemArray[top] = item;
         return true;
@@ -53,10 +46,10 @@ public class TobiasStack<T> {
      *
      * @return item popped
      *
-     * @throws EmptyStackException if the stack is empty
+     * @throws java.util.EmptyStackException if the stack is empty
      */
     public T pop() throws EmptyStackException {
-        if (isEmpty()) {
+        if (empty()) {
             throw new EmptyStackException();
         }
         return itemArray[top--];
@@ -69,8 +62,8 @@ public class TobiasStack<T> {
      *
      * @throws EmptyStackException if the stack is empty
      */
-    public T peek() throws EmptyStackException {
-        if (isEmpty()) {
+    public T top() throws EmptyStackException {
+        if (empty()) {
             throw new EmptyStackException();
         }
         return itemArray[top];
@@ -90,19 +83,16 @@ public class TobiasStack<T> {
      *
      * @return true if the stack is empty, false otherwise
      */
-    public boolean isEmpty() {
+    public boolean empty() {
         return top < 0;
     }
 
     /**
-     * Double the array size.
+     * Checks if the stack is full.
+     *
+     * @return true if the stack is full, false otherwise
      */
-    private void resize() {
-        T[] newArray = (T[]) new Object[arraySize * 2];
-        for (int i = 0; i < arraySize; i++) {
-            newArray[i] = itemArray[i];
-        }
-        itemArray = newArray;
-        arraySize *= 2;
+    public boolean full() {
+        return size() >= arraySize;
     }
 }
