@@ -1,5 +1,8 @@
 package Q3;
 
+import util.THFixedStack;
+import util.THStueue;
+
 public class Question3 {
 
     public static void main(String[] args) {

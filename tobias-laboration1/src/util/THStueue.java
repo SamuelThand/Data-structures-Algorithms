@@ -1,4 +1,4 @@
-package Q3;
+package util;
 
 /**
  * A stueue is a combination of a stack and a queue.
