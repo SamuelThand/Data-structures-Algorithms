@@ -1,7 +1,5 @@
 package util;
 
-import org.w3c.dom.Node;
-
 /**
  * A circular doubly linked list which has the following properties:
  *
@@ -27,6 +25,9 @@ public class THCircularDoublyLinkedList {
      * @param value value to insert
      */
     public int insert(int value) {
+        if (start != null && start.data > start.next.data) {
+            return 1;
+        }
         Node node = new Node(value);
         if (size == 0) {
             start = node;
@@ -68,7 +69,7 @@ public class THCircularDoublyLinkedList {
         } else {
             Node current = start;
             do {
-                System.out.print(current.data + " ");
+                System.out.print(current.data + ", ");
                 current = current.next;
             } while (current != start);
             System.out.println();
@@ -79,14 +80,16 @@ public class THCircularDoublyLinkedList {
      * Counts the number of triplets in the list that sum up to the given value x.
      * @param sum sum of the triplets
      */
-    public void triplet(int sum) {
+    public int triplet(int sum) {
         Node current, first, last, stop;
-        System.out.println("Triplet summing to " + sum);
-        if (size < 3) {
-            System.out.println("Not enough elements");
+        if (start.data > start.next.data) {
+            return 1;
+        } else if (size < 3) {
+            return -1;
         } else {
+            System.out.println("Triplet summing to " + sum);
             current = start;
-            stop = current.previous.previous.previous;
+            stop = current.previous.previous;
             do {
                 first = current.next;
                 last = start.previous;
@@ -107,11 +110,48 @@ public class THCircularDoublyLinkedList {
                 current = current.next;
             } while (current != stop);
         }
-
+        return 0;
     }
 
+    /**
+     * Reverses the sorting order.
+     */
     public void reverse() {
-        System.out.println("Reverse");
+        if (start == null || start.next == start) {
+            return;
+        }
+        Node last = start.previous;
+        start = reverse(start, last, start);
+    }
+
+    /**
+     * Reverses the list.
+     * @param current current node
+     * @param last last node
+     * @param first first node
+     * @return new start node, reversed list
+     */
+    private Node reverse(Node current, Node last, Node first) {
+        if (current == last) {
+            Node temp = current.next;
+            current.next = current.previous;
+            current.previous = temp;
+            first.previous = current;
+            return current;
+        }
+
+        Node nextNode = current.next;
+        Node newStart = reverse(current.next, last, first);
+
+        current.next = current.previous;
+        current.previous = nextNode;
+
+        if (nextNode == first) {
+            nextNode.next = current;
+            first.previous = current;
+        }
+
+        return newStart;
     }
 
     private static class Node {

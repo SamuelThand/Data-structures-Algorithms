@@ -32,14 +32,19 @@ public class Question5 {
         switch (input) {
             case 1 -> {
                 int number = promptUser("Enter number to insert:");
-                if (list.insert(number) == -1) {
-                    System.out.println("Number already exists");
+                switch (list.insert(number)) {
+                    case 0 -> System.out.println("Number " + number + " inserted");
+                    case 1 -> System.out.println("List is not sorted in ascending order");
+                    case -1 -> System.out.println("Number already exists");
                 }
             }
             case 2 -> list.display();
             case 3 -> {
                 int number = promptUser("Enter triplet target:");
-                list.triplet(number);
+                switch (list.triplet(number)) {
+                    case 1 -> System.out.println("List is not sorted in ascending order");
+                    case -1 -> System.out.println("Not enough elements");
+                }
             }
             case 4 -> list.reverse();
             case 0 -> {
