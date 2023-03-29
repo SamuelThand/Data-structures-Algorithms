@@ -69,8 +69,38 @@ public class SamuelCircularDoublyLinkedList {
         return reverseNodes(next, current);
     }
 
-    public void triplet() {
+    public void triplet(int targetValue) {
+        Node<Integer> start, current, end;
 
+        start = this.head;
+        current = this.head.getNextNode();
+        end = this.tail;
+
+        do {
+            do {
+                do {
+                    int sum = start.getItem() + current.getItem() + end.getItem();
+                    if (sum == targetValue)
+                        System.out.printf("(%d, %d, %d)", start.getItem(), current.getItem(), end.getItem());
+                    current = current.getNextNode();
+                } while (current.getItem() < end.getItem());
+
+                start = start.getNextNode();
+                current = start.getNextNode();
+
+            } while (start != end.getPreviousNode().getPreviousNode() && current != end.getPreviousNode());
+
+            start = this.head;
+            current = this.head.getNextNode();
+            end = end.getPreviousNode();
+
+        } while (!(start == this.head && current == this.head.getNextNode() && end == this.head.getNextNode().getNextNode())); //TODO den sista görs inte? 1, 2, 3
+
+//        System.out.println();
+//
+//        int sum = start.getItem() + current.getItem() + end.getItem();
+//        if (sum == targetValue)
+//            System.out.printf("(%d, %d, %d)", start.getItem(), current.getItem(), end.getItem());
     }
 
     public void display() {
