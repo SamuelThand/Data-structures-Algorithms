@@ -1,39 +1,45 @@
+import java.util.Scanner;
+
 public class Q5 {
 
     public static void main(String[] args) {
         var list = new SamuelCircularDoublyLinkedList();
-        list.insert(1);
-        list.insert(2);
-        list.insert(4);
-        list.insert(5);
-        list.insert(6);
-        list.insert(8);
-        list.insert(9);
+        var scanner = new Scanner(System.in);
 
-        list.triplet(17);
+        while (true) {
+            System.out.println("1. Insert");
+            System.out.println("2. Display");
+            System.out.println("3. Find Triplets");
+            System.out.println("4. Reverse");
+            System.out.println("5. Exit");
 
-        // Icke fungerande testcase som ska returnera (1,2,3)
-//        list.insert(2);
-//        list.insert(7);
-//        list.insert(4);
-//        list.insert(0);
-//        list.insert(9);
-//        list.insert(5);
-//        list.insert(1);
-//        list.insert(3);
-//
-//        list.triplet(6);
+            switch (scanner.nextInt()) {
+                case 1 -> {
+                    System.out.println("Value: ");
+                    try {
+                        list.insert(scanner.nextInt());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e);
+                    }
 
-
-
-//        list.insert(1);
-//        list.insert(2);
-//        list.insert(3);
-//        list.insert(4);
-//        list.insert(5);
-//        list.insert(6);
-//
-//        list.triplet(6);
+                }
+                case 2 -> list.display();
+                case 3 -> {
+                    System.out.println("Value to find triplets for: ");
+                    list.triplet(scanner.nextInt());
+                }
+                case 4 -> {
+                    list.reverse();
+                    System.out.println("List has been reversed.");
+                }
+                case 5 -> {
+                    scanner.close();
+                    System.exit(0);
+                }
+                default -> {
+                }
+            }
+        }
 
     }
 

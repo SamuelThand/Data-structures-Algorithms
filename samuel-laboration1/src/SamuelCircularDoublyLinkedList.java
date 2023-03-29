@@ -9,6 +9,10 @@ public class SamuelCircularDoublyLinkedList {
     }
 
     public void insert(int item) throws IllegalArgumentException {
+
+        if (itemExists(item))
+            throw new IllegalArgumentException("This number already exists in the list");
+
         var node = new Node<>(item);
 
         if (isEmpty()) {
@@ -22,10 +26,7 @@ public class SamuelCircularDoublyLinkedList {
                 currentNode = currentNode.getNextNode();
             }
 
-            if (nodeIsDuplicate(currentNode, item))
-                throw new IllegalArgumentException("This number already exists in the list");
-
-            else if (currentNode.getItem() > item) {
+            if (currentNode.getItem() > item) {
                 if (currentNode == this.head) {
                     this.head = node;
                     this.tail.setNextNode(node);
@@ -109,8 +110,18 @@ public class SamuelCircularDoublyLinkedList {
     }
 
 
-    private boolean nodeIsDuplicate(Node<Integer> node, int item) {
-        return node.getItem() == item;
+    public boolean itemExists(int item) {
+        if (isEmpty())
+            return false;
+
+        var currentNode = this.head;
+        do {
+            if (currentNode.getItem() == item)
+                return true;
+            currentNode = currentNode.getNextNode();
+        } while (currentNode != this.head);
+
+        return false;
     }
 
     private boolean containsOneItem() {
