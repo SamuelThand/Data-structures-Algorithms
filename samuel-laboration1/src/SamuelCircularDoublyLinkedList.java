@@ -13,45 +13,89 @@ public class SamuelCircularDoublyLinkedList {
 
         if (isEmpty()) {
             this.head = node;
+            this.tail = node;
+            node.setNextNode(node);
+            node.setPreviousNode(node);
         } else {
             var currentNode = this.head;
-
             while (currentNode.getItem() < item && currentNode.getNextNode() != this.head) {
                 currentNode = currentNode.getNextNode();
             }
 
-            if (isDuplicate(currentNode, item))
+            if (nodeIsDuplicate(currentNode, item))
                 throw new IllegalArgumentException("This number already exists in the list");
 
             else if (currentNode.getItem() > item) {
-                if (currentNode == this.head)
+                if (currentNode == this.head) {
                     this.head = node;
-                else
+                    this.tail.setNextNode(node);
+                } else
                     currentNode.getPreviousNode().setNextNode(node);
 
-                //relinking
                 node.setPreviousNode(currentNode.getPreviousNode());
                 node.setNextNode(currentNode);
                 currentNode.setPreviousNode(node);
 
-            // The item is the largest one yet
             } else {
-
-
-                //?
+                node.setPreviousNode(this.tail);
+                node.setNextNode(this.head);
+                this.head.setPreviousNode(node);
+                this.tail.setNextNode(node);
+                this.tail = node;
             }
+        }
+    }
 
+    public void reverse() {
+        if (isEmpty() || containsOneItem()) {
+            System.out.println("List contains one item, nothing to reverse");
+        } else {
+            var formerHead = this.head;
+            this.head = reverseNodes(this.head, this.tail);
+            this.tail = formerHead;
+        }
+    }
 
+    private Node<Integer> reverseNodes(Node<Integer> current, Node<Integer> previous) {
 
+        var next = current.getNextNode();
+        current.setNextNode(previous);
+        current.setPreviousNode(next);
 
-
+        if (next == this.head) {
+            return current;
         }
 
+        return reverseNodes(next, current);
+    }
+
+    public void triplet() {
 
     }
 
-    private boolean isDuplicate(Node<Integer> node, int item) {
+    public void display() {
+        if (isEmpty())
+            System.out.println("Empty");
+        else {
+            var currentNode = this.head;
+            System.out.println("List contents:");
+            do {
+                System.out.print(currentNode.getItem());
+                if (this.tail != currentNode)
+                    System.out.print(", ");
+                currentNode = currentNode.getNextNode();
+            } while (currentNode != this.head);
+            System.out.println();
+        }
+    }
+
+
+    private boolean nodeIsDuplicate(Node<Integer> node, int item) {
         return node.getItem() == item;
+    }
+
+    private boolean containsOneItem() {
+        return this.head.getNextNode() == this.head;
     }
 
     public boolean isEmpty() {
