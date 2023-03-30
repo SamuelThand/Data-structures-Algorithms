@@ -2,15 +2,20 @@ public class SamuelCircularDoublyLinkedList {
 
     private Node<Integer> head;
     private Node<Integer> tail;
+    private boolean isReversed;
 
     public SamuelCircularDoublyLinkedList() {
         this.head = null;
         this.tail = null;
+        this.isReversed = false;
     }
 
     public void insert(int item) throws IllegalArgumentException {
 
-        if (itemExists(item))
+        if (this.isReversed)
+            throw new IllegalArgumentException("Can't insert - the list is reversed.");
+
+        else if (itemExists(item))
             throw new IllegalArgumentException("This number already exists in the list");
 
         var node = new Node<>(item);
@@ -54,6 +59,10 @@ public class SamuelCircularDoublyLinkedList {
             var formerHead = this.head;
             this.head = reverseNodes(this.head, this.tail);
             this.tail = formerHead;
+
+            this.isReversed = !this.isReversed;
+            System.out.println("List has been reversed.");
+
         }
     }
 
@@ -71,8 +80,10 @@ public class SamuelCircularDoublyLinkedList {
     }
 
     public void triplet(int targetValue) {
-        Node<Integer> start, current, end;
+        if (this.isReversed)
+            throw new IllegalArgumentException("Can't find triplets - the list is reversed.");
 
+        Node<Integer> start, current, end;
         start = this.head;
         current = this.head.getNextNode();
         end = this.tail;
@@ -91,6 +102,8 @@ public class SamuelCircularDoublyLinkedList {
             current = this.head.getNextNode();
             end = end.getPreviousNode();
         }
+
+        System.out.println();
     }
 
     public void display() {

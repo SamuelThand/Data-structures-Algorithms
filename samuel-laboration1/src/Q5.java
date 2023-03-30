@@ -26,11 +26,14 @@ public class Q5 {
                 case 2 -> list.display();
                 case 3 -> {
                     System.out.println("Value to find triplets for: ");
-                    list.triplet(scanner.nextInt());
+                    try {
+                        list.triplet(scanner.nextInt());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e);
+                    }
                 }
                 case 4 -> {
                     list.reverse();
-                    System.out.println("List has been reversed.");
                 }
                 case 5 -> {
                     scanner.close();
