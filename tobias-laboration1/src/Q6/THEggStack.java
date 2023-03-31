@@ -15,7 +15,15 @@ public class THEggStack {
         }
     }
 
-    public int getEgg(int barcode) {
-        int 
+    public int getEgg(long barcode) {
+        int temp, pos;
+        temp = (int) (barcode % 10000);
+        pos = temp / 100;
+        if (pos >= LIMIT) {
+            System.out.println("Tray not found!");
+            return -1;
+        }
+        System.out.println("Getting egg from tray " + (pos+1) + ".");
+        return trays[pos].getEgg(barcode);
     }
 }
