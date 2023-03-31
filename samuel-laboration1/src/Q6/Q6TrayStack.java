@@ -1,3 +1,5 @@
+package Q6;
+
 public class Q6TrayStack {
 
     Q6Tray[] Trays = new Q6Tray[30];

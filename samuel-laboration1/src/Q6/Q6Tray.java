@@ -1,3 +1,5 @@
+package Q6;
+
 public class Q6Tray {
 
     int[][] eggs = new int[10][10];

@@ -1,3 +1,8 @@
+package Q4;
+
+import SamuelDatastructures.Q4Customer;
+import SamuelDatastructures.Q4CustomerQueue;
+
 public class Q4 {
     public static void main(String[] args) {
 

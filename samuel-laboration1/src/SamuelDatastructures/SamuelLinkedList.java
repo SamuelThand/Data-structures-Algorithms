@@ -1,3 +1,7 @@
+package SamuelDatastructures;
+
+import SamuelDatastructures.Node;
+
 import java.util.Iterator;
 
 public class SamuelLinkedList<T> implements Iterable<T> {

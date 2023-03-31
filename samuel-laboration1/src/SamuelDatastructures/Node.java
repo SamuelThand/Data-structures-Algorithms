@@ -1,3 +1,5 @@
+package SamuelDatastructures;
+
 public class Node<T> {
 
     private final T item;

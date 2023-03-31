@@ -1,3 +1,7 @@
+package Q1;
+
+import SamuelDatastructures.SamuelFixedSizeStack;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

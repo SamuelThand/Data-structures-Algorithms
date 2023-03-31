@@ -1,3 +1,5 @@
+package SamuelDatastructures;
+
 public class Q4CustomerQueue {
 
     private final SamuelLinkedList<Q4Customer> regularQueue;

@@ -1,3 +1,7 @@
+package Q2;
+
+import SamuelDatastructures.SamuelFixedSizeStack;
+
 import java.util.EmptyStackException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -26,7 +30,7 @@ public class Q2 {
             if (currentDepth.size() != 0)
                 throw new InputMismatchException();
 
-            System.out.printf("The currentDepth of nested parenthesis: %d", maxDepth);
+            System.out.printf("The depth of nested parenthesis: %d", maxDepth);
         } catch (EmptyStackException e) {
             System.out.println("The expression has more right parenthesis then left parenthesis");
         } catch (InputMismatchException e) {

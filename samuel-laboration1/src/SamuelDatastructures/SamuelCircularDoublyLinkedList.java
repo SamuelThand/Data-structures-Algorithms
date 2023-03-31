@@ -1,3 +1,5 @@
+package SamuelDatastructures;
+
 public class SamuelCircularDoublyLinkedList {
 
     private Node<Integer> head;

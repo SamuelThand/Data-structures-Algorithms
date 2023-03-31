@@ -1,3 +1,5 @@
+package Q6;
+
 public class Q6Inomhus {
 
     Q6Warehouse[] warehouses = new Q6Warehouse[20];

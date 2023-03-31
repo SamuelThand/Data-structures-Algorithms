@@ -1,3 +1,5 @@
+package Q6;
+
 public class Q6Truck {
 
     Q6Box[] boxes = new Q6Box[100];

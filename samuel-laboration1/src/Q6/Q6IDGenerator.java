@@ -1,3 +1,5 @@
+package Q6;
+
 public class Q6IDGenerator {
 
     private static int id = 0;

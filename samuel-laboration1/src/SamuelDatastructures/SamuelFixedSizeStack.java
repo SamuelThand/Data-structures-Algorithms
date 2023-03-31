@@ -1,3 +1,5 @@
+package SamuelDatastructures;
+
 import java.util.EmptyStackException;
 
 public class SamuelFixedSizeStack<T> {

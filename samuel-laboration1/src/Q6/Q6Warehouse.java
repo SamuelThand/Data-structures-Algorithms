@@ -1,3 +1,5 @@
+package Q6;
+
 public class Q6Warehouse {
 
     Q6Truck[] trucks = new Q6Truck[15];
