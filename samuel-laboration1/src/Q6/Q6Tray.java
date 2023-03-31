@@ -6,11 +6,9 @@ public class Q6Tray {
 
     public Q6Tray() {
         var idGenerator = new Q6IDGenerator();
-//        int count = 0;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 eggs[i][j] = idGenerator.getId();
-//                count++;
             }
         }
     }
