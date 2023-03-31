@@ -8,4 +8,7 @@ public class Q6Truck {
         }
     }
 
+    public Q6Box[] getBoxes() {
+        return boxes;
+    }
 }

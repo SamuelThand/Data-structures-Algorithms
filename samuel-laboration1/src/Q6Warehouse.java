@@ -8,4 +8,7 @@ public class Q6Warehouse {
         }
     }
 
+    public Q6Truck[] getTrucks() {
+        return trucks;
+    }
 }

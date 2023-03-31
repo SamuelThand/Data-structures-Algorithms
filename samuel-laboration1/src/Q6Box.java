@@ -8,4 +8,7 @@ public class Q6Box {
         }
     }
 
+    public Q6TrayStack[] getTrayStacks() {
+        return trayStacks;
+    }
 }

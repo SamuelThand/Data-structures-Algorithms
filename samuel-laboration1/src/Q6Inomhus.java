@@ -11,8 +11,21 @@ public class Q6Inomhus {
 
     }
 
-    public int getEggId() {
-        return 1;
+    public int getEggId(
+            int warehouseNumber,
+            int truckNumber,
+            int boxNumber,
+            int stackNumber,
+            int trayNumber,
+            int trayRow,
+            int trayColumn
+    ) {
+        return warehouses[warehouseNumber]
+                .getTrucks()[truckNumber]
+                .getBoxes()[boxNumber]
+                .getTrayStacks()[stackNumber]
+                .getTrays()[trayNumber]
+                .getEggs()[trayRow][trayColumn];
     }
 
 }
