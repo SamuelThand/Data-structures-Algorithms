@@ -64,6 +64,27 @@ public class THBinarySearchTree<T extends Comparable<T>> {
         return node;
     }
 
+    public boolean find(T item) {
+        return find(item, root);
+    }
+
+    private boolean find(T item, Node<T> node) {
+        if (node == null) {
+            return false;
+        }
+        int compared = item.compareTo(node.item);
+        if (compared < 0) {
+            return find(item, node.left);
+        } else if (compared > 0) {
+            return find(item, node.right);
+        }
+        return true;
+    }
+
+    public boolean isBalanced() {
+        return isBalanced(root);
+    }
+
     public void print() {
         print(root);
     }
