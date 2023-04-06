@@ -16,23 +16,23 @@ public class THBinaryTree<T extends Comparable<T>> {
     }
 
     private boolean insert(T item, Node<T> subRoot) {
-        subRoot.item.compareTo(item);
         return true;
     }
 
-    public void compareToRoot(T item) {
-        System.out.println(this.root.item.compareTo(item));
-    }
-
     private static class Node<T> {
-        public T item;
-        public Node<T> left;
-        public Node<T> right;
+        T item;
+        Node<T> left;
+        Node<T> right;
 
-        public Node(T item) {
-            this.item = item;
-            this.left = null;
-            this.right = null;
+        Node(T item) {
+            this(item, null, null);
         }
+
+        Node(T item, Node<T> left, Node<T> right) {
+            this.item = item;
+            this.left = left;
+            this.right = right;
+        }
+
     }
 }
