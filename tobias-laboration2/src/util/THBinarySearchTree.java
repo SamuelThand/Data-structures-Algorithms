@@ -122,7 +122,31 @@ public class THBinarySearchTree<T extends Comparable<T>> {
         print(node.left, level + 1);
     }
 
+    public void preOrderTraversal() {
+        // root -> left child -> right child, iterative
+        
+    }
+    public void postOrderTraversal() {
+        // left child -> right child -> root, iterative
+    }
+    public void inOrderTraversal() {
+        // left child -> root -> right child, iterative
+    }
+    public void levelOrderTraversal() {
+        //
+    }
+    public void preOrderTraversalRec() {
 
+    }
+    public void postOrderTraversalRec() {
+
+    }
+    public void inOrderTraversalRec() {
+
+    }
+    public void levelOrderTraversalRec() {
+
+    }
     private static class Node<T> {
         T item;
         Node<T> left;
