@@ -1,5 +1,6 @@
 package util;
 
+
 public class THBinarySearchTree<T extends Comparable<T>> {
     Node<T> root;
 
@@ -80,22 +81,47 @@ public class THBinarySearchTree<T extends Comparable<T>> {
         }
         return true;
     }
+    public boolean checkBalance() {
+        return checkBalance(root);
+    }
 
-    public boolean isBalanced() {
-        return isBalanced(root);
+    private boolean checkBalance(Node<T> node) {
+        if (node == null) {
+            return true;
+        }
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+        if (Math.abs(leftHeight - rightHeight) > 1) {
+            return false;
+        }
+        return checkBalance(node.left) && checkBalance(node.right);
+    }
+
+    private int height(Node<T> node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + Math.max(height(node.left), height(node.right));
     }
 
     public void print() {
-        print(root);
+        System.out.println("-".repeat(40));
+        print(root, 0);
+        System.out.println("-".repeat(40));
     }
 
-    private void print(Node<T> node) {
-        if (node != null) {
-            print(node.left);
-            System.out.println(node.item);
-            print(node.right);
+    private void print(Node<T> node, int level) {
+        if (node == null) {
+            return;
         }
+        print(node.right, level + 1);
+        for (int i = 0; i < level; i++) {
+            System.out.print("-  ");
+        }
+        System.out.println(node.item);
+        print(node.left, level + 1);
     }
+
 
     private static class Node<T> {
         T item;
