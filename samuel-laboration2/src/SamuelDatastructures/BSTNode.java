@@ -11,7 +11,10 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     public void insert(T data) {
-        if (data.compareTo(this.data) <= 0) {
+        if (this.data == null)
+            this.data = data;
+
+        else if (data.compareTo(this.data) <= 0) {
             if (this.left == null)
                 this.left = new BSTNode<>(data);
             else
@@ -133,26 +136,33 @@ public class BSTNode<T extends Comparable<T>> {
         }
     }
 
-    public boolean contains(T data) {
-        if (data.compareTo(this.data) == 0)
-            return true;
+    public BSTNode<T> find(T data) {
+        if (this.data == null)
+            return null;
+        else if (data.compareTo(this.data) == 0)
+            return this;
         else if (data.compareTo(this.data) < 0)
             if (this.left == null)
-                return false;
+                return null;
             else
-                return this.left.contains(data);
+                return this.left.find(data);
         else
             if (this.right == null)
-                return false;
+                return null;
             else
-                return this.right.contains(data);
+                return this.right.find(data);
     }
 
-    public void find(BSTNode<T> node) {
-        //TODO do
+    public void clear() {
+        this.data = null;
+        this.left = null;
+        this.right = null;
     }
 
     public int getHeight() {
+        if (this.data == null)
+            return -1;
+
         int leftHeight = this.leftHeight();
         int rightHeight = this.rightHeight();
 
