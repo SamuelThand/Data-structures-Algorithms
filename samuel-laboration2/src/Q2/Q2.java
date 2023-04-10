@@ -26,9 +26,14 @@ public class Q2 {
         System.out.printf("Balanced: %s\n", tree.isBalanced());
         System.out.printf("Height: %s\n", tree.getHeight());
 
-//        System.out.println("Iterative Level order traversal:");
-//        tree.IterativeLevelOrderTraversal();
-//        System.out.println();
+        System.out.println("Iterative Level order traversal:");
+        tree.iterativeLevelOrderTraversal();
+        System.out.println();
+
+        System.out.println("Recursive Level order traversal:");
+        tree.recursiveLevelOrderTraversal();
+        System.out.println();
+
 //
 //        System.out.println("contains 30");
 //        System.out.println(tree.contains(30));

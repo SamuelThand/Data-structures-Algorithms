@@ -55,30 +55,38 @@ public class BSTNode<T extends Comparable<T>> {
             this.right.recursiveInOrderTraversal();
     }
 
-    public void RecursiveLevelOrderTraversal() {
-        //TODO do
-
-
-
+    public void recursiveLevelOrderTraversal() {
+        for (int i = 0; i < getHeight(); i++)
+            printNodesForDepth(i);
     }
 
+    private void printNodesForDepth(int depth) {
+        if (depth == 0)
+            System.out.println(this.data);
+        else {
+            if (this.left != null)
+                this.left.printNodesForDepth(depth - 1);
+            if (this.right != null)
+                this.right.printNodesForDepth(depth - 1);
+        }
+    }
 
     //TODO iterative traversals (if possible with this structure)
 
 
-    public void IterativePreOrderTraversal() {
+    public void iterativePreOrderTraversal() {
         //TODO do
     }
 
-    public void IterativePostOrderTraversal() {
+    public void iterativePostOrderTraversal() {
         //TODO do
     }
 
-    public void IterativeInOrderTraversal() {
+    public void iterativeInOrderTraversal() {
         //TODO do
     }
 
-    public void IterativeLevelOrderTraversal() {
+    public void iterativeLevelOrderTraversal() {
         var queue = new SamuelLinkedListQueue<BSTNode<T>>();
         queue.enqueue(this);
 
