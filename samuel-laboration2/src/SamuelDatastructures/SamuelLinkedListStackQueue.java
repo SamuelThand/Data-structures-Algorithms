@@ -1,12 +1,12 @@
 package SamuelDatastructures;
 
-public class SamuelLinkedListQueue<T> {
+public class SamuelLinkedListStackQueue<T> {
 
     private ListNode<T> head;
     private ListNode<T> tail;
     private int size;
 
-    SamuelLinkedListQueue() {
+    SamuelLinkedListStackQueue() {
         this.head = null;
         this.tail = null;
         this.size = 0;
@@ -39,6 +39,21 @@ public class SamuelLinkedListQueue<T> {
             this.tail = null;
         else
             this.head.setPreviousNode(null);
+
+        this.size--;
+        return data;
+    }
+
+    public T pop() throws IllegalStateException {
+        if (this.isEmpty())
+            throw new IllegalStateException("Queue is empty");
+
+        T data = this.tail.getItem();
+        this.tail = this.tail.getPreviousNode();
+        if (this.tail == null)
+            this.head = null;
+        else
+            this.tail.setNextNode(null);
 
         this.size--;
         return data;

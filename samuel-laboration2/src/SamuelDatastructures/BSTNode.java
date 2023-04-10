@@ -71,23 +71,56 @@ public class BSTNode<T extends Comparable<T>> {
         }
     }
 
-    //TODO iterative traversals (if possible with this structure)
-
-
     public void iterativePreOrderTraversal() {
-        //TODO do
+        var stack = new SamuelLinkedListStackQueue<BSTNode<T>>();
+        stack.enqueue(this);
+
+        while (!stack.isEmpty()) {
+            var node = stack.pop();
+            System.out.println(node.data);
+            if (node.right != null)
+                stack.enqueue(node.right);
+            if (node.left != null)
+                stack.enqueue(node.left);
+        }
     }
 
     public void iterativePostOrderTraversal() {
-        //TODO do
+        var stack = new SamuelLinkedListStackQueue<BSTNode<T>>();
+        var nodesInReverse = new SamuelLinkedListStackQueue<BSTNode<T>>();
+        stack.enqueue(this);
+
+        while (!stack.isEmpty()) {
+            var node = stack.pop();
+            nodesInReverse.enqueue(node);
+            if (node.left != null)
+                stack.enqueue(node.left);
+            if (node.right != null)
+                stack.enqueue(node.right);
+        }
+
+        while (!nodesInReverse.isEmpty())
+            System.out.println(nodesInReverse.pop().data);
     }
 
     public void iterativeInOrderTraversal() {
-        //TODO do
+        var stack = new SamuelLinkedListStackQueue<BSTNode<T>>();
+        var node = this;
+
+        while (!stack.isEmpty() || node != null) {
+            if (node != null) {
+                stack.enqueue(node);
+                node = node.left;
+            } else {
+                node = stack.pop();
+                System.out.println(node.data);
+                node = node.right;
+            }
+        }
     }
 
     public void iterativeLevelOrderTraversal() {
-        var queue = new SamuelLinkedListQueue<BSTNode<T>>();
+        var queue = new SamuelLinkedListStackQueue<BSTNode<T>>();
         queue.enqueue(this);
 
         while (!queue.isEmpty()) {
