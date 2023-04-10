@@ -12,22 +12,36 @@ public class SamuelLinkedListQueue<T> {
         this.size = 0;
     }
 
-    public T insert() {
-        //TODO do
-    }
+    public void enqueue(T item) {
+        var node = new ListNode<>(item);
 
-    public T deque() {
-        //TODO do
-    }
-
-    public T removeHead() {
-        if (isEmpty()) {
-            return null;
+        if (this.isEmpty()) {
+            this.head = node;
+            this.tail = node;
+            node.setNextNode(node);
+            node.setPreviousNode(node);
         } else {
-            var item = head.getItem();
-            head = head.getNextNode();
-            return item;
+            this.tail.setNextNode(node);
+            node.setPreviousNode(this.tail);
+            this.tail = node;
         }
+
+        this.size++;
+    }
+
+    public T deque() throws IllegalStateException {
+        if (this.isEmpty())
+            throw new IllegalStateException("Queue is empty");
+
+        T data = this.head.getItem();
+        this.head = this.head.getNextNode();
+        if (this.head == null)
+            this.tail = null;
+        else
+            this.head.setPreviousNode(null);
+
+        this.size--;
+        return data;
     }
 
     public int size() {

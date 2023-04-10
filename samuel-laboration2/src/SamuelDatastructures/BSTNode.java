@@ -6,7 +6,7 @@ public class BSTNode<T extends Comparable<T>> {
     BSTNode<T> right;
     T data;
 
-    BSTNode(T data) {
+    public BSTNode(T data) {
         this.data = data;
     }
 
@@ -29,28 +29,28 @@ public class BSTNode<T extends Comparable<T>> {
         //TODO do
     }
 
-    public void RecursivePreOrderTraversal() {
+    public void recursivePreOrderTraversal() {
         System.out.println(this.data);
         if (this.left != null)
-            this.left.RecursiveInOrderTraversal();
+            this.left.recursivePreOrderTraversal();
         if (this.right != null)
-            this.right.RecursiveInOrderTraversal();
+            this.right.recursivePreOrderTraversal();
     }
 
-    public void RecursivePostOrderTraversal() {
+    public void recursivePostOrderTraversal() {
         if (this.left != null)
-            this.left.RecursiveInOrderTraversal();
+            this.left.recursivePostOrderTraversal();
         if (this.right != null)
-            this.right.RecursiveInOrderTraversal();
+            this.right.recursivePostOrderTraversal();
         System.out.println(this.data);
     }
 
-    public void RecursiveInOrderTraversal() {
+    public void recursiveInOrderTraversal() {
         if (this.left != null)
-            this.left.RecursiveInOrderTraversal();
+            this.left.recursiveInOrderTraversal();
         System.out.println(this.data);
         if (this.right != null)
-            this.right.RecursiveInOrderTraversal();
+            this.right.recursiveInOrderTraversal();
     }
 
     public void RecursiveLevelOrderTraversal() {
@@ -74,8 +74,17 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     public void IterativeLevelOrderTraversal() {
-        // TODO Implement a new better queue with good big-O
-        // TODO Use queue for traversing in leveled order
+        var queue = new SamuelLinkedListQueue<BSTNode<T>>();
+        queue.enqueue(this);
+
+        while (!queue.isEmpty()) {
+            var node = queue.deque();
+            System.out.println(node.data);
+            if (node.left != null)
+                queue.enqueue(node.left);
+            if (node.right != null)
+                queue.enqueue(node.right);
+        }
     }
 
     public boolean contains(T data) {
