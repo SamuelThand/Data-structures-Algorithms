@@ -110,8 +110,21 @@ public class BSTNode<T extends Comparable<T>> {
         return true;
     }
 
-    public void print() {
-        //TODO do
+    private void print(String indentation, boolean isLeft) {
+        if (right != null) {
+            right.print(indentation + (isLeft ? "│   " : "    "), false);
+        }
+
+        System.out.println(indentation + (isLeft ? "└── " : "┌── ") + data);
+
+        if (left != null) {
+            left.print(indentation + (isLeft ? "    " : "│   "), true);
+        }
     }
+
+    public void print() {
+        print("", true);
+    }
+
 
 }

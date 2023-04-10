@@ -5,7 +5,9 @@ import SamuelDatastructures.BSTNode;
 public class Q2 {
 
     public static void main(String[] args) {
-        System.out.println("lab 2 Q2");
+
+
+        System.out.println("Tree:");
 
         var tree = new BSTNode<>(50);
         tree.insert(30);
@@ -14,21 +16,32 @@ public class Q2 {
         tree.insert(70);
         tree.insert(60);
         tree.insert(80);
+        tree.insert(81);
+        tree.insert(82);
+        tree.insert(83);
+        tree.insert(86);
+        tree.insert(1);
+
+
+        tree.print();
 
         System.out.println("Iterative Level order traversal:");
         tree.IterativeLevelOrderTraversal();
+        System.out.println();
 
         System.out.println("contains 30");
         System.out.println(tree.contains(30));
+        System.out.println();
 
-//        System.out.println("Recursive preorder traversal:");
-//        tree.recursivePreOrderTraversal();
 
-//        System.out.println("Recursive postorder traversal:");
-//        tree.recursivePostOrderTraversal();
+        System.out.println("Recursive preorder traversal:");
+        tree.recursivePreOrderTraversal();
+
+        System.out.println("Recursive postorder traversal:");
+        tree.recursivePostOrderTraversal();
 //
-//        System.out.println("Recursive inorder traversal:");
-//        tree.recursiveInOrderTraversal();
+        System.out.println("Recursive inorder traversal:");
+        tree.recursiveInOrderTraversal();
 
     }
 }
