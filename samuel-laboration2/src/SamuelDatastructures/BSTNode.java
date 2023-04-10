@@ -27,6 +27,8 @@ public class BSTNode<T extends Comparable<T>> {
 
     public void remove(T data) {
         //TODO do
+
+
     }
 
     public void recursivePreOrderTraversal() {
@@ -55,6 +57,9 @@ public class BSTNode<T extends Comparable<T>> {
 
     public void RecursiveLevelOrderTraversal() {
         //TODO do
+
+
+
     }
 
 
@@ -106,25 +111,40 @@ public class BSTNode<T extends Comparable<T>> {
         //TODO do
     }
 
-    public boolean isBalanced() {
-        return true;
+    public int getHeight() {
+        int leftHeight = this.leftHeight();
+        int rightHeight = this.rightHeight();
+
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 
-    private void print(String indentation, boolean isLeft) {
+    private int leftHeight() {
+        return this.left != null ? 1 + this.left.leftHeight() : -1;
+    }
+
+    private int rightHeight() {
+        return this.right != null ? 1 + this.right.rightHeight() : -1;
+    }
+
+
+    public boolean isBalanced() {
+        return Math.abs(leftHeight() - rightHeight()) <= 1;
+    }
+
+    public void print() {
+        recursivePrint("", true);
+    }
+    
+    private void recursivePrint(String indentation, boolean isLeft) {
         if (right != null) {
-            right.print(indentation + (isLeft ? "│   " : "    "), false);
+            right.recursivePrint(indentation + (isLeft ? "│   " : "    "), false);
         }
 
         System.out.println(indentation + (isLeft ? "└── " : "┌── ") + data);
 
         if (left != null) {
-            left.print(indentation + (isLeft ? "    " : "│   "), true);
+            left.recursivePrint(indentation + (isLeft ? "    " : "│   "), true);
         }
     }
-
-    public void print() {
-        print("", true);
-    }
-
 
 }
