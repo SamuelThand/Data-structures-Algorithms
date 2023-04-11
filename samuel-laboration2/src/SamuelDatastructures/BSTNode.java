@@ -28,10 +28,35 @@ public class BSTNode<T extends Comparable<T>> {
         }
     }
 
-    public void remove(T data) {
-        //TODO do
+    public BSTNode<T> remove(T data) {
+        return this.recursiveRemove(this, data);
+    }
 
+    private BSTNode<T> recursiveRemove(BSTNode<T> node, T data) {
+        if (node == null)
+            return null;
+        else if (data.compareTo(node.data) < 0)
+            node.left = recursiveRemove(node.left, data);
+        else if (data.compareTo(node.data) > 0)
+            node.right = recursiveRemove(node.right, data);
+        else {
+            if (node.left == null && node.right == null)
+                return null;
+            else if (node.left == null)
+                return node.right;
+            else if (node.right == null)
+                return node.left;
+            else {
+                node.data = findSubtreeMinimumValue(node.left);
+                node.left = recursiveRemove(node.left, node.data);
+            }
+        }
 
+        return node;
+    }
+
+    private T findSubtreeMinimumValue(BSTNode<T> node) {
+        return node.right == null ? node.data : findSubtreeMinimumValue(node.right);
     }
 
     public void recursivePreOrderTraversal() {
@@ -163,8 +188,8 @@ public class BSTNode<T extends Comparable<T>> {
         if (this.data == null)
             return -1;
 
-        int leftHeight = this.leftHeight();
-        int rightHeight = this.rightHeight();
+        int leftHeight = (this.left != null) ? this.left.getHeight() : -1;
+        int rightHeight = (this.right != null) ? this.right.getHeight() : -1;
 
         return 1 + Math.max(leftHeight, rightHeight);
     }

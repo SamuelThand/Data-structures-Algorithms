@@ -6,7 +6,7 @@ public class Q2 {
 
     public static void main(String[] args) {
 
-        System.out.println("Tree:");
+        System.out.println("Trees:\n");
 
         var tree = new BSTNode<>('M');
         tree.insert('O');
@@ -46,68 +46,41 @@ public class Q2 {
         System.out.printf("Height: %s\n", tree.getHeight());
 
 
+        var tree2 = new BSTNode<>(10);
+        tree2.insert(1);
+        tree2.insert(8);
+        tree2.insert(9);
+        tree2.insert(6);
+        tree2.insert(7);
+        tree2.insert(5);
+        tree2.insert(12);
+        tree2.insert(11);
+        tree2.insert(20);
+        tree2.insert(18);
+        tree2.insert(19);
+        tree2.insert(16);
+        tree2.insert(17);
 
-//
-//        System.out.println("Tree:");
-//
-//        var tree = new BSTNode<>(50);
-//        tree.insert(30);
-//        tree.insert(20);
-//        tree.insert(40);
-//        tree.insert(70);
-//        tree.insert(60);
-//        tree.insert(80);
-//        tree.insert(81);
-//        tree.insert(82);
-//        tree.insert(83);
-//        tree.insert(86);
-//        tree.insert(1);
-//
-//        tree.print();
-//        System.out.printf("Balanced: %s\n", tree.isBalanced());
-//        System.out.printf("Height: %s\n", tree.getHeight());
+        System.out.println("\nTree 2:");
+        tree2.print();
+        System.out.printf("Balanced: %s\n", tree2.isBalanced());
+        System.out.printf("Height: %s\n", tree2.getHeight());
 
-//        System.out.println("Iterative Level order traversal:");
-//        tree.iterativeLevelOrderTraversal();
-//        System.out.println();
-//
-//        System.out.println("Recursive Level order traversal:");
-//        tree.recursiveLevelOrderTraversal();
-//        System.out.println();
+        System.out.println("\nDeleting 1:");
+        tree2 = tree2.remove(1);
+        tree2.print();
 
-//        System.out.println("Iterative Pre order traversal:");
-//        tree.iterativePreOrderTraversal();
-//        System.out.println();
-//
-//        System.out.println("Recursive Pre order traversal:");
-//        tree.recursivePreOrderTraversal();
-//        System.out.println();
-//
-//        System.out.println("Iterative postorder traversal:");
-//        tree.iterativePostOrderTraversal();
-//        System.out.println();
-//
-//        System.out.println("Recursive postorder traversal:");
-//        tree.recursivePostOrderTraversal();
+        System.out.println("\nDeleting 12:");
+        tree2 = tree2.remove(12);
+        tree2.print();
 
-//        System.out.println("Iterative inorder traversal:");
-//        tree.iterativeInOrderTraversal();
-//        System.out.println();
-//
-//        System.out.println("Recursive inorder traversal:");
-//        tree.recursiveInOrderTraversal();
+        System.out.println("\nDeleting 16:");
+        tree2 = tree2.remove(16);
+        tree2.print();
 
-//        System.out.println("contains 30");
-//        System.out.println(tree.find(30));
-//        System.out.println();
-//
-//
-//        System.out.println("Recursive preorder traversal:");
-//        tree.recursivePreOrderTraversal();
-//
-////
-//        System.out.println("Recursive inorder traversal:");
-//        tree.recursiveInOrderTraversal();
+        System.out.println("\nDeleting 17:");
+        tree2 = tree2.remove(17);
+        tree2.print();
 
     }
 }
