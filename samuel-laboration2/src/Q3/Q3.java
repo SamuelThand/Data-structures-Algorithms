@@ -82,11 +82,6 @@ public class Q3 {
         System.out.println(tree.find(30));
         System.out.println();
 
-        // Kör igenom alla traversals med 10, 100, 1000, 10000, 100k, 1mil
-        // random siffror
-
-        // Kör varje metoderna med 10, 100, 1000 size tusen gånger var och ta fram snittet
-
         System.out.println();
         System.out.println();
         System.out.println();
@@ -95,41 +90,98 @@ public class Q3 {
         System.out.println();
         System.out.println();
 
+        doMeasurement(1_000_000, 10);
+        doMeasurement(100_000, 100);
+        doMeasurement(10000, 1000);
+        doMeasurement(1000, 10000);
+        doMeasurement(100, 100_000);
+        doMeasurement(10, 1_000_000);
+    }
 
-        var testingTree10 = new BSTNode<Integer>(null);
-        var testingTree100 = new BSTNode<Integer>(null);
-        var testingTree1000 = new BSTNode<Integer>(null);
-        var testingTree10000 = new BSTNode<Integer>(null);
-        var testingTree100000 = new BSTNode<Integer>(null);
-        var testingTree1000000 = new BSTNode<Integer>(null);
+    private static void doMeasurement(int iterations, int treeSize) {
 
-        var random = new Random();
+        System.out.printf("TREE SIZE %d - Average times (MS)\n", treeSize);
+        System.out.println("-------------------------------------------------");
+
         var mutedOutput = new PrintStream(OutputStream.nullOutputStream());
         var enabledOutput = System.out;
-
-        //Testing size 10
-        System.setOut(mutedOutput);
+        var random = new Random();
+        var tree = new BSTNode<Integer>(null);
         long t_iterativeInorderTraveral = 0;
+        long t_iterativePreorderTraveral = 0;
+        long t_iterativePostorderTraveral = 0;
+        long t_iterativeLevelorderTraveral = 0;
+        long t_recursiveInorderTraveral = 0;
+        long t_recursivePreorderTraveral = 0;
+        long t_recursivePostorderTraveral = 0;
+        long t_recursiveLevelorderTraveral = 0;
         long start = 0;
         long end = 0;
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < 10; j++)
-                testingTree10.insert(random.nextInt());
+        System.setOut(mutedOutput);
+        for (int i = 0; i < iterations; i++) {
+            for (int j = 0; j < treeSize; j++)
+                tree.insert(random.nextInt());
+
+            //Iterative
+            start = System.nanoTime();
+            tree.iterativeInOrderTraversal();
+            end = System.nanoTime();
+            t_iterativeInorderTraveral += end - start;
 
             start = System.nanoTime();
-            testingTree10.iterativeInOrderTraversal();
+            tree.iterativePreOrderTraversal();
             end = System.nanoTime();
+            t_iterativePreorderTraveral += end - start;
 
-            t_iterativeInorderTraveral += end - start;
-            testingTree10.clear();
+            start = System.nanoTime();
+            tree.iterativePostOrderTraversal();
+            end = System.nanoTime();
+            t_iterativePostorderTraveral += end - start;
+
+            start = System.nanoTime();
+            tree.iterativeLevelOrderTraversal();
+            end = System.nanoTime();
+            t_iterativeLevelorderTraveral += end - start;
+
+            //Recursive
+            start = System.nanoTime();
+            tree.recursiveInOrderTraversal();
+            end = System.nanoTime();
+            t_recursiveInorderTraveral += end - start;
+
+            start = System.nanoTime();
+            tree.recursivePreOrderTraversal();
+            end = System.nanoTime();
+            t_recursivePreorderTraveral += end - start;
+
+            start = System.nanoTime();
+            tree.recursivePostOrderTraversal();
+            end = System.nanoTime();
+            t_recursivePostorderTraveral += end - start;
+
+            start = System.nanoTime();
+            tree.recursiveLevelOrderTraversal();
+            end = System.nanoTime();
+            t_recursiveLevelorderTraveral += end - start;
+
+            tree.clear();
         }
         System.setOut(enabledOutput);
 
-        System.out.println("LIST SIZE 10 - Average times (MS)\n");
         System.out.println("Iterative\n");
-//        System.out.print("In-order: " + t_iterativeInorderTraveral/1000);
-        System.out.print("In-order: " + t_iterativeInorderTraveral);
-
+        System.out.print("In-order: " + t_iterativeInorderTraveral/iterations/1_000_000.0 + " ");
+        System.out.print("Pre-order: " + t_iterativePreorderTraveral/iterations/1_000_000.0 + " ");
+        System.out.print("Post-order: " + t_iterativePostorderTraveral/iterations/1_000_000.0 + " ");
+        System.out.print("Level-order: " + t_iterativeLevelorderTraveral/iterations/1_000_000.0 + " ");
+        System.out.println();
+        System.out.println();
+        System.out.println("Recursive\n");
+        System.out.print("In-order: " + t_recursiveInorderTraveral/iterations/1_000_000.0 + " ");
+        System.out.print("Pre-order: " + t_recursivePreorderTraveral/iterations/1_000_000.0 + " ");
+        System.out.print("Post-order: " + t_recursivePostorderTraveral/iterations/1_000_000.0 + " ");
+        System.out.print("Level-order: " + t_recursiveLevelorderTraveral/iterations/1_000_000.0 + " ");
+        System.out.println();
+        System.out.println();
     }
 }
 
