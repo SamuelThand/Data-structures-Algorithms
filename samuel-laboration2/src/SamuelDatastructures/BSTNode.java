@@ -60,7 +60,7 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     public void recursivePreOrderTraversal() {
-        System.out.println(this.data);
+        System.out.print(this.data + ", ");
         if (this.left != null)
             this.left.recursivePreOrderTraversal();
         if (this.right != null)
@@ -72,25 +72,25 @@ public class BSTNode<T extends Comparable<T>> {
             this.left.recursivePostOrderTraversal();
         if (this.right != null)
             this.right.recursivePostOrderTraversal();
-        System.out.println(this.data);
+        System.out.print(this.data + ", ");
     }
 
     public void recursiveInOrderTraversal() {
         if (this.left != null)
             this.left.recursiveInOrderTraversal();
-        System.out.println(this.data);
+        System.out.print(this.data + ", ");
         if (this.right != null)
             this.right.recursiveInOrderTraversal();
     }
 
     public void recursiveLevelOrderTraversal() {
-        for (int i = 0; i < getHeight(); i++)
+        for (int i = 0; i < getHeight() + 1; i++)
             printNodesForDepth(i);
     }
 
     private void printNodesForDepth(int depth) {
         if (depth == 0)
-            System.out.println(this.data);
+            System.out.print(this.data + ", ");
         else {
             if (this.left != null)
                 this.left.printNodesForDepth(depth - 1);
@@ -105,7 +105,7 @@ public class BSTNode<T extends Comparable<T>> {
 
         while (!stack.isEmpty()) {
             var node = stack.pop();
-            System.out.println(node.data);
+            System.out.print(node.data + ", ");
             if (node.right != null)
                 stack.enqueue(node.right);
             if (node.left != null)
@@ -128,7 +128,7 @@ public class BSTNode<T extends Comparable<T>> {
         }
 
         while (!nodesInReverse.isEmpty())
-            System.out.println(nodesInReverse.pop().data);
+            System.out.print(nodesInReverse.pop().data + ", ");
     }
 
     public void iterativeInOrderTraversal() {
@@ -141,7 +141,7 @@ public class BSTNode<T extends Comparable<T>> {
                 node = node.left;
             } else {
                 node = stack.pop();
-                System.out.println(node.data);
+                System.out.print(node.data + ", ");
                 node = node.right;
             }
         }
@@ -153,7 +153,7 @@ public class BSTNode<T extends Comparable<T>> {
 
         while (!queue.isEmpty()) {
             var node = queue.deque();
-            System.out.println(node.data);
+            System.out.print(node.data + ", ");
             if (node.left != null)
                 queue.enqueue(node.left);
             if (node.right != null)
