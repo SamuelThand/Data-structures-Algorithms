@@ -105,9 +105,8 @@ public class THBinarySearchTree<T extends Comparable<T>> {
     }
 
     public void print() {
-        System.out.println("-".repeat(40));
+        System.out.println();
         print(root, 0);
-        System.out.println("-".repeat(40));
     }
 
     private void print(Node<T> node, int level) {
@@ -126,16 +125,17 @@ public class THBinarySearchTree<T extends Comparable<T>> {
      * Pre-order traversal of the current tree.
      * root -> left child -> right child, iterative
      */
-    public void preOrderTraversal() {
+    public THQueue<T> preOrderTraversal() {
+        THQueue<T> resultQueue = new THQueue<>();
         if (root == null) {
-            return;
+            return resultQueue;
         }
         THStack<Node<T>> stack = new THStack<>();
         Node<T> current = root;
 
         while (!stack.isEmpty() || current != null) {
             if (current != null) {
-                System.out.print(current.item);
+                resultQueue.enqueue(current.item);
                 stack.push(current);
                 current = current.left;
             } else {
@@ -143,16 +143,17 @@ public class THBinarySearchTree<T extends Comparable<T>> {
                 current = current.right;
             }
         }
-        System.out.println();
+        return resultQueue;
     }
 
     /**
      * Post-order traversal of the current tree.
      * left child -> right child -> root, iterative
      */
-    public void postOrderTraversal() {
+    public THQueue<T> postOrderTraversal() {
+        THQueue<T> resultQueue = new THQueue<>();
         if (root == null) {
-            return;
+            return resultQueue;
         }
         THStack<Node<T>> stack = new THStack<>();
         Node<T> current = root;
@@ -168,21 +169,22 @@ public class THBinarySearchTree<T extends Comparable<T>> {
                 if (peek.right != null && lastVisited != peek.right) {
                     current = peek.right;
                 } else {
-                    System.out.print(peek.item);
+                    resultQueue.enqueue(peek.item);
                     lastVisited = stack.pop();
                 }
             }
         }
-        System.out.println();
+        return resultQueue;
     }
 
     /**
      * In-order traversal of the current tree.
      * left child -> root -> right child, iterative
      */
-    public void inOrderTraversal() {
+    public THQueue<T> inOrderTraversal() {
+        THQueue<T> resultQueue = new THQueue<>();
         if (root == null) {
-            return;
+            return resultQueue;
         }
         THStack<Node<T>> stack = new THStack<>();
         Node<T> current = root;
@@ -193,26 +195,27 @@ public class THBinarySearchTree<T extends Comparable<T>> {
                 current = current.left;
             } else {
                 current = stack.pop();
-                System.out.print(current.item);
+                resultQueue.enqueue(current.item);
                 current = current.right;
             }
         }
-        System.out.println();
+        return resultQueue;
     }
 
     /**
      * Level-order traversal of the current tree.
      * One level at a time, iterative
      */
-    public void levelOrderTraversal() {
+    public THQueue<T> levelOrderTraversal() {
+        THQueue<T> resultQueue = new THQueue<>();
         if (root == null) {
-            return;
+            return resultQueue;
         }
         THLinkedList<Node<T>> queue = new THLinkedList<>();
         queue.addLast(root);
         while (!queue.isEmpty()) {
             Node<T> current = queue.removeFirst();
-            System.out.print(current.item);
+            resultQueue.enqueue(current.item);
             if (current.left != null) {
                 queue.addLast(current.left);
             }
@@ -220,84 +223,88 @@ public class THBinarySearchTree<T extends Comparable<T>> {
                 queue.addLast(current.right);
             }
         }
-        System.out.println();
+        return resultQueue;
     }
 
     /**
      * Pre-order traversal of the current tree.
      * root -> left child -> right child, recursive
      */
-    public void preOrderTraversalRec() {
-        preOrderTraversalRec(root);
-        System.out.println();
+    public THQueue<T> preOrderTraversalRec() {
+        THQueue<T> resultQueue = new THQueue<>();
+        preOrderTraversalRec(root, resultQueue);
+        return resultQueue;
     }
 
-    private void preOrderTraversalRec(Node<T> node) {
+    private void preOrderTraversalRec(Node<T> node, THQueue<T> resultQueue) {
         if (node == null) {
             return;
         }
-        System.out.print(node.item);
-        preOrderTraversalRec(node.left);
-        preOrderTraversalRec(node.right);
+        resultQueue.enqueue(node.item);
+        preOrderTraversalRec(node.left, resultQueue);
+        preOrderTraversalRec(node.right, resultQueue);
     }
 
     /**
      * Post-order traversal of the current tree.
      * left child -> right child -> root, recursive
      */
-    public void postOrderTraversalRec() {
-        postOrderTraversalRec(root);
-        System.out.println();
+    public THQueue<T> postOrderTraversalRec() {
+        THQueue<T> resultQueue = new THQueue<>();
+        postOrderTraversalRec(root, resultQueue);
+        return resultQueue;
     }
 
-    private void postOrderTraversalRec(Node<T> node) {
+    private void postOrderTraversalRec(Node<T> node, THQueue<T> resultQueue) {
         if (node == null) {
             return;
         }
-        postOrderTraversalRec(node.left);
-        postOrderTraversalRec(node.right);
-        System.out.print(node.item);
+        postOrderTraversalRec(node.left, resultQueue);
+        postOrderTraversalRec(node.right, resultQueue);
+        resultQueue.enqueue(node.item);
     }
 
     /**
      * In-order traversal of the current tree.
      * left child -> root -> right child, recursive
      */
-    public void inOrderTraversalRec() {
-        inOrderTraversalRec(root);
-        System.out.println();
+    public THQueue<T> inOrderTraversalRec() {
+        THQueue<T> resultQueue = new THQueue<>();
+        inOrderTraversalRec(root, resultQueue);
+        return resultQueue;
     }
 
-    private void inOrderTraversalRec(Node<T> node) {
+    private void inOrderTraversalRec(Node<T> node, THQueue<T> resultQueue) {
         if (node == null) {
             return;
         }
-        inOrderTraversalRec(node.left);
-        System.out.print(node.item);
-        inOrderTraversalRec(node.right);
+        inOrderTraversalRec(node.left, resultQueue);
+        resultQueue.enqueue(node.item);
+        inOrderTraversalRec(node.right, resultQueue);
     }
 
     /**
      * level-order traversal of the current tree.
      * One level at a time, recursive
      */
-    public void levelOrderTraversalRec() {
+    public THQueue<T> levelOrderTraversalRec() {
         int height = height(root);
+        THQueue<T> resultQueue = new THQueue<>();
         for (int i = 1; i <= height; i++) {
-            levelOrderTraversalRec(root, i);
+            levelOrderTraversalRec(root, i, resultQueue);
         }
-        System.out.println();
+        return resultQueue;
     }
 
-    private void levelOrderTraversalRec(Node<T> node, int level) {
+    private void levelOrderTraversalRec(Node<T> node, int level, THQueue<T> resultQueue) {
         if (node == null) {
             return;
         }
         if (level == 1) {
-            System.out.print(node.item);
+            resultQueue.enqueue(node.item);
         } else {
-            levelOrderTraversalRec(node.left, level - 1);
-            levelOrderTraversalRec(node.right, level - 1);
+            levelOrderTraversalRec(node.left, level - 1, resultQueue);
+            levelOrderTraversalRec(node.right, level - 1, resultQueue);
         }
     }
 
