@@ -18,16 +18,16 @@ public class Q4 {
         }
 
         tree.print();
-
         System.out.println("Tree is balanced: " + tree.isBalanced());
+        System.out.println("Amount of numbers below 100: " + tree.countLessThan(100));
 
         System.out.println("inserting 30");
         tree = tree.insert(30);
 
         System.out.println("Finding 30: " + tree.find(30));
 
-        System.out.println("Adding numbers 1-100");
-        for (int i = 1; i < 101; i++) {
+        System.out.println("Adding numbers 31-100");
+        for (int i = 31; i < 101; i++) {
             tree = tree.insert(i);
         }
 
@@ -42,8 +42,7 @@ public class Q4 {
         tree.print();
         System.out.println("Tree is balanced: " + tree.isBalanced());
 
-        //TODO Answer B
-
+        System.out.println("Amount of numbers below 100: " + tree.countLessThan(100));
 
     }
 
