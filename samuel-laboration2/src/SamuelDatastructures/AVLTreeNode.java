@@ -9,61 +9,31 @@ public class AVLTreeNode<T extends Comparable<T>> {
 
     public AVLTreeNode(T data) {
         this.data = data;
+        this.height = 0;
     }
 
-    public void insert(T data) {
-        if (this.data == null)
+    public AVLTreeNode<T> insert(T data) {
+        if (this.data == null) {
             this.data = data;
+            return this;
+        }
 
         else
-            this.recursiveInsert(this, data);
-
-//        else if (data.compareTo(this.data) <= 0) {
-//            if (this.left == null)
-//                this.left = new AVLTreeNode<>(data);
-//            else
-//                this.left.insert(data);
-//
-//        } else {
-//            if (this.right == null)
-//                this.right = new AVLTreeNode<>(data);
-//            else
-//                this.right.insert(data);
-//        }
+            return this.recursiveInsert(this, data);
     }
 
     private AVLTreeNode<T> recursiveInsert(AVLTreeNode<T> node, T data) {
         if (node == null)
             return new AVLTreeNode<>(data);
 
-        if (data.compareTo(this.data) <= 0)
+        if (data.compareTo(node.data) <= 0)
             node.left = recursiveInsert(node.left, data);
         else
             node.right = recursiveInsert(node.right, data);
 
-        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
-        var balance = calculateBalance(node);
-
-        if (balance > 1) // Left-heavy tree
-            if (data.compareTo(node.left.data) < 0) // node would be in right subtree of the right child of the unbalanced node
-                return rotateRight(node);
-            else if (data.compareTo(node.left.data) > 0) // node would be in right subtree of left child of unbalanced node
-                return rotateLeftRight(node);
-
-        if (balance < -1) // Right-heavy tree
-            if (data.compareTo(node.right.data) > 0) // node would be in left subtree of the left child of the unbalanced node
-                return rotateLeft(node);
-            else if (data.compareTo(node.right.data) < 0) // node would be in left subtree of right child of unbalanced node
-                return rotateRightLeft(node);
-
-
-        return node; // Balanced tree
+        node.height = calculateHeight(node);
+        return doBalancing(node, calculateBalance(node));
     }
-
-
-
-
-
 
     public AVLTreeNode<T> remove(T data) {
         return this.recursiveRemove(this, data);
@@ -89,36 +59,33 @@ public class AVLTreeNode<T extends Comparable<T>> {
             }
         }
 
+        node.height = calculateHeight(node);
+        return doBalancing(node, calculateBalance(node));
+    }
+
+    private T findSubtreeMinimumValue(AVLTreeNode<T> node) {
+        return node.right == null ? node.data : findSubtreeMinimumValue(node.right);
+    }
+
+    private AVLTreeNode<T> doBalancing(AVLTreeNode<T> node, int balance) {
+        // Left-heavy tree
+        if (balance > 1)
+            if (calculateBalance(node.left) >= 0) // node would be in right subtree of the right child of the unbalanced node
+                return rotateRight(node);
+            else
+                return rotateLeftRight(node); // node would be in right subtree of left child of unbalanced node
+
+        // Right-heavy tree
+        else if (balance < -1)
+            if (calculateBalance(node.right) <= 0)  // node would be in left subtree of the left child of the unbalanced node
+                return rotateLeft(node);
+            else
+                return rotateRightLeft(node); // node would be in left subtree of right child of unbalanced node
+
+        // Balanced tree
         return node;
     }
 
-    private AVLTreeNode<T> rotateLeft(AVLTreeNode<T> node) {
-        var root = node.right;
-        node.right = root.left;
-        root.left = node;
-
-        node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
-        root.height = Math.max(getHeight(root.left), getHeight(root.right)) + 1;
-
-//        node.height = calculateHeight(node);
-//        root.height = calculateHeight(root);
-
-        return root;
-    }
-
-    private AVLTreeNode<T> rotateRight(AVLTreeNode<T> node) {
-        var root = node.left;
-        node.left = root.right;
-        root.right = node;
-
-        node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
-        root.height = Math.max(getHeight(root.left), getHeight(root.right)) + 1;
-
-//        node.height = calculateHeight(node);
-//        root.height = calculateHeight(root);
-
-        return root;
-    }
 
     private AVLTreeNode<T> rotateLeftRight(AVLTreeNode<T> node) {
         node.left = rotateLeft(node.left);
@@ -130,9 +97,30 @@ public class AVLTreeNode<T extends Comparable<T>> {
         return rotateLeft(node);
     }
 
+    private AVLTreeNode<T> rotateLeft(AVLTreeNode<T> node) {
+        var root = node.right;
+        node.right = root.left;
+        root.left = node;
 
-    private T findSubtreeMinimumValue(AVLTreeNode<T> node) {
-        return node.right == null ? node.data : findSubtreeMinimumValue(node.right);
+        node.height = calculateHeight(node);
+        root.height = calculateHeight(root);
+
+        return root;
+    }
+
+    private AVLTreeNode<T> rotateRight(AVLTreeNode<T> node) {
+        var root = node.left;
+        node.left = root.right;
+        root.right = node;
+
+        node.height = calculateHeight(node);
+        root.height = calculateHeight(root);
+
+        return root;
+    }
+
+    private int calculateHeight(AVLTreeNode<T> node) {
+        return 1 + Math.max(getHeight(node.left), getHeight(node.right));
     }
 
     public AVLTreeNode<T> find(T data) {
@@ -152,50 +140,35 @@ public class AVLTreeNode<T extends Comparable<T>> {
             return this.right.find(data);
     }
 
-    public void clear() {
-        this.data = null;
-        this.left = null;
-        this.right = null;
-    }
-
-    public int calculateHeight(AVLTreeNode<T> node) {
-//        if (node.data == null)
-        if (node == null)
-            return -1;
-
-        int leftHeight = (node.left != null) ? calculateHeight(node.left) : -1;
-        int rightHeight = (node.right != null) ? calculateHeight(node.right) : -1;
-
-        return 1 + Math.max(leftHeight, rightHeight);
-    }
-
-    private int leftHeight() {
-        return this.left != null ? 1 + this.left.leftHeight() : -1;
-    }
-
-    private int rightHeight() {
-        return this.right != null ? 1 + this.right.rightHeight() : -1;
-    }
-
-
     public boolean isBalanced() {
-        return Math.abs(leftHeight() - rightHeight()) <= 1;
+        return Math.abs(calculateBalance(this)) <= 1;
     }
 
     private int calculateBalance(AVLTreeNode<T> node) {
         return getHeight(node.left) - getHeight(node.right);
     }
 
+    public int getHeight(AVLTreeNode<T> node) {
+        return node == null ? -1 : node.height;
+    }
+
+    public int countLessThan(T data) {
+        int count = 0;
+        if (this.data != null) {
+            if (this.data.compareTo(data) < 0)
+                count++;
+            if (this.left != null)
+                count += this.left.countLessThan(data);
+            if (this.right != null && this.data.compareTo(data) < 0)
+                count += this.right.countLessThan(data);
+        }
+
+        return count;
+    }
+
+
     public void print() {
         recursivePrint("", true);
-    }
-
-    public void count() {
-        //TODO implement
-    }
-
-    public int getHeight(AVLTreeNode<T> node) {
-        return node == null ? -1 : node.height; //TODO is -1 return on null needed?
     }
 
     private void recursivePrint(String indentation, boolean isLeft) {
@@ -208,6 +181,13 @@ public class AVLTreeNode<T extends Comparable<T>> {
         if (left != null) {
             left.recursivePrint(indentation + (isLeft ? "    " : "│   "), true);
         }
+
+    }
+
+    public void clear() {
+        this.data = null;
+        this.left = null;
+        this.right = null;
     }
 
 }
