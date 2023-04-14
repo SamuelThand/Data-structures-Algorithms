@@ -1,7 +1,5 @@
 package SamuelDatastructures;
 
-import SamuelDatastructures.Node;
-
 import java.util.Iterator;
 
 public class SamuelLinkedList<T> implements Iterable<T> {
@@ -38,13 +36,13 @@ public class SamuelLinkedList<T> implements Iterable<T> {
 
         if (isEmpty()) {
             this.head = node;
-        } else {
+        } else { // Add the node as the last node in the list
             var currentNode = this.head;
             while (currentNode.getNextNode() != null) {
                 currentNode = currentNode.getNextNode();
             }
 
-            currentNode.setNextNode(node);
+            currentNode.setNextNode(node); // link it to the previous
         }
     }
 
@@ -53,15 +51,15 @@ public class SamuelLinkedList<T> implements Iterable<T> {
             return null;
         } else if (head.getItem().equals(item)) {
             var removedItem = this.head.getItem();
-            this.head = head.getNextNode();
+            this.head = head.getNextNode(); // Node after head becomes new head
             return removedItem;
-        } else {
+        } else { // The item must be somewhere after the head
             var nextNode = head.getNextNode();
             var currentNode = head;
             while (nextNode != null) {
                 if (nextNode.getItem().equals(item)) {
                     var removedItem = nextNode.getItem();
-                    currentNode.setNextNode(nextNode.getNextNode());
+                    currentNode.setNextNode(nextNode.getNextNode()); // link current node to the one after the removed
                     return removedItem;
                 }
                 currentNode = nextNode;

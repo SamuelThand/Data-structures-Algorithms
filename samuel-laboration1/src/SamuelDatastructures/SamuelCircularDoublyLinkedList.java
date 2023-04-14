@@ -15,36 +15,39 @@ public class SamuelCircularDoublyLinkedList {
     public void insert(int item) throws IllegalArgumentException {
 
         if (this.isReversed)
-            throw new IllegalArgumentException("Can't insert - the list is reversed.");
+            throw new IllegalArgumentException("Can't insert - the list is reversed."); //Insertion disabled since it will not sort
 
         else if (itemExists(item))
             throw new IllegalArgumentException("This number already exists in the list");
 
         var node = new Node<>(item);
 
-        if (isEmpty()) {
+        if (isEmpty()) { // All references point to itself if it's alone in the list
             this.head = node;
             this.tail = node;
             node.setNextNode(node);
             node.setPreviousNode(node);
         } else {
             var currentNode = this.head;
-            while (currentNode.getItem() < item && currentNode.getNextNode() != this.head) {
+            while (currentNode.getItem() < item && currentNode.getNextNode() != this.head) { // Iterate through until reaching the tail
                 currentNode = currentNode.getNextNode();
             }
 
-            if (currentNode.getItem() > item) {
-                if (currentNode == this.head) {
+            if (currentNode.getItem() > item) { // The tail is larger than the incoming item
+                if (currentNode == this.head) { // New node becomes head, tail points to head
                     this.head = node;
                     this.tail.setNextNode(node);
-                } else
+                } else // Precious node set to point to the new node
                     currentNode.getPreviousNode().setNextNode(node);
 
+                // Relinking the node to be included in the structure behind currentNode.
                 node.setPreviousNode(currentNode.getPreviousNode());
                 node.setNextNode(currentNode);
                 currentNode.setPreviousNode(node);
 
-            } else {
+            } else { // the incoming item is larger then the tail
+
+                //Relinking the node to be included last in the list
                 node.setPreviousNode(this.tail);
                 node.setNextNode(this.head);
                 this.head.setPreviousNode(node);
@@ -68,6 +71,7 @@ public class SamuelCircularDoublyLinkedList {
         }
     }
 
+    //Go through each node recursively and swap the next and previous references
     private Node<Integer> reverseNodes(Node<Integer> current, Node<Integer> previous) {
 
         var next = current.getNextNode();
@@ -90,6 +94,7 @@ public class SamuelCircularDoublyLinkedList {
         current = this.head.getNextNode();
         end = this.tail;
 
+        // Find combinations for N choose 3, and test if the summed combination equals the target value
         while (!(current == end)) {
             while (!(current == end)) {
                 while (current.getItem() < end.getItem()) {

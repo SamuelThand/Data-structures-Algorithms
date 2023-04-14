@@ -54,7 +54,7 @@ public class Q1 {
 
     public static boolean navigateMaze(int[][] maze) {
         SamuelFixedSizeStack<Q1Coordinate> moves = new SamuelFixedSizeStack<>(30);
-        int[][] coordinatesBacktrackedFrom = new int[maze.length][maze[0].length];
+        int[][] coordinatesBacktrackedFrom = new int[maze.length][maze[0].length]; //Keps track of the coordinates that have been backtracked from
 
         // Initialize coordinatesBacktrackedFrom with zeros
         for (int i = 0; i < maze.length; i++) {
@@ -80,7 +80,7 @@ public class Q1 {
             boolean canBacktrackLeft = currentQ1Coordinate.Y() > 0 && maze[currentQ1Coordinate.X()][currentQ1Coordinate.Y()-1] == -1 && coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()-1] == 0;
             boolean canBacktrackRight = currentQ1Coordinate.Y() < (maze[0].length - 1) && maze[currentQ1Coordinate.X()][currentQ1Coordinate.Y()+1] == -1 && coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()+1] == 0;
 
-            if (isOnTheLastRow && isOnTheLastColumn) {
+            if (isOnTheLastRow && isOnTheLastColumn) { //Victory
                 paintPath(maze, coordinatesBacktrackedFrom);
                 return true;
             }
@@ -98,7 +98,7 @@ public class Q1 {
                 } if (canGoRight) {
                     moves.push(new Q1Coordinate(currentQ1Coordinate.X(), currentQ1Coordinate.Y() + 1));
                     foundNewPath = true;
-                } if (!foundNewPath) {
+                } if (!foundNewPath) { //Tries to backtrack only if no new path has been found
                     if (canBacktrackLeft) {
                         moves.push(new Q1Coordinate(currentQ1Coordinate.X(), currentQ1Coordinate.Y() - 1));
                         coordinatesBacktrackedFrom[currentQ1Coordinate.X()][currentQ1Coordinate.Y()] = -1;
@@ -119,6 +119,7 @@ public class Q1 {
         return false;
     }
 
+    // Clears all coordinates that have been backtracked from, leaving only the shortest first path
     public static void paintPath(int[][] maze, int[][] coordinatesBacktrackedFrom) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {

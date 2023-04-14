@@ -16,6 +16,7 @@ public class Q3Stueue<T> {
         stack1.push(item);
     }
 
+    // stack1 is used to represent the tail of the StackQueue
     public T pop() {
         if (!stack1.isEmpty()) {
             return stack1.pop();
@@ -30,6 +31,7 @@ public class Q3Stueue<T> {
 
     }
 
+    // stack2 is used to represent the head of the StackQueue
     public T deque() {
         if (stack2.isEmpty()) {
             while (!stack1.isEmpty()) {

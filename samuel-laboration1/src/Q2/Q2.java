@@ -13,18 +13,19 @@ public class Q2 {
         String expression = scanner.nextLine();
         scanner.close();
 
+        // Stack size is the current depth
         SamuelFixedSizeStack<Object> currentDepth = new SamuelFixedSizeStack<>(expression.length());
 
         int maxDepth = 0;
         try {
             for (int i = 0; i < expression.length(); i++) {
                 if (expression.charAt(i) == '(')
-                    currentDepth.push(new Object());
+                    currentDepth.push(new Object()); // Increase depth 1 lvl
                     if (currentDepth.size() > maxDepth)
                         maxDepth++;
 
                 else if (expression.charAt(i) == ')')
-                    currentDepth.pop();
+                    currentDepth.pop(); // Decrease depth 1 lvl
             }
 
             if (currentDepth.size() != 0)

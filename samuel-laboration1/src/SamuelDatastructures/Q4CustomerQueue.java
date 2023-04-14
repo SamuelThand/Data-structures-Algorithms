@@ -32,7 +32,7 @@ public class Q4CustomerQueue {
     public Q4Customer removeCustomer() {
 
         Q4Customer customerRemoved = null;
-        if (!expressQueue.isEmpty()) {
+        if (!expressQueue.isEmpty()) { // Serve express queue first
             customerRemoved = expressQueue.removeHead();
             System.out.printf("Customer %d: %s with %d items left the express queue, %d customers left in this queue.\n",
                     customerRemoved.customerID(),
@@ -49,7 +49,7 @@ public class Q4CustomerQueue {
                     regularQueue.size());
         }
 
-        if (customerRemoved != null) {
+        if (customerRemoved != null) { // Reassign a customer between the queues if one queue is empty
             if (expressQueue.isEmpty()) {
                 reassignCustomer(expressQueue, regularQueue);
             } else if (regularQueue.isEmpty()) {
