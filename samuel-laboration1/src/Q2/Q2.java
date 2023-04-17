@@ -30,7 +30,6 @@ public class Q2 {
 
             if (currentDepth.size() != 0)
                 throw new InputMismatchException();
-
             System.out.printf("The depth of nested parenthesis: %d", maxDepth);
         } catch (EmptyStackException e) {
             System.out.println("The expression has more right parenthesis then left parenthesis");

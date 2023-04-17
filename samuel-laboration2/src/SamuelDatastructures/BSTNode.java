@@ -11,20 +11,20 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     public void insert(T data) {
-        if (this.data == null)
+        if (this.data == null) //Empty node
             this.data = data;
 
-        else if (data.compareTo(this.data) <= 0) {
+        else if (data.compareTo(this.data) <= 0) { //The incoming data is <= the nodes data
             if (this.left == null)
                 this.left = new BSTNode<>(data);
             else
-                this.left.insert(data);
+                this.left.insert(data); // Recursive call down the left subtree
 
         } else {
             if (this.right == null)
                 this.right = new BSTNode<>(data);
             else
-                this.right.insert(data);
+                this.right.insert(data); // Recursive call down the right subtree
         }
     }
 
@@ -36,16 +36,22 @@ public class BSTNode<T extends Comparable<T>> {
         if (node == null)
             return null;
         else if (data.compareTo(node.data) < 0)
-            node.left = recursiveRemove(node.left, data);
+            node.left = recursiveRemove(node.left, data); // Recursive call down the left subtree
         else if (data.compareTo(node.data) > 0)
-            node.right = recursiveRemove(node.right, data);
+            node.right = recursiveRemove(node.right, data); // Recursive call down the right subtree
         else {
+
+            // Case 1: Node has no children
             if (node.left == null && node.right == null)
                 return null;
+
+            // Case 2: Node has 1 child
             else if (node.left == null)
                 return node.right;
             else if (node.right == null)
                 return node.left;
+
+            //Case 3: Node as 2 children
             else {
                 node.data = findSubtreeMinimumValue(node.left);
                 node.left = recursiveRemove(node.left, node.data);
@@ -85,10 +91,10 @@ public class BSTNode<T extends Comparable<T>> {
 
     public void recursiveLevelOrderTraversal() {
         for (int i = 0; i < getHeight() + 1; i++)
-            printNodesForDepth(i);
+            printNodesForDepth(i); // Pass the height from low to high.
     }
 
-    private void printNodesForDepth(int depth) {
+    private void printNodesForDepth(int depth) { // Will traverse the tree from top to +1 level lower for each call, inefficient
         if (depth == 0)
             System.out.print(this.data + ", ");
         else {
@@ -118,7 +124,7 @@ public class BSTNode<T extends Comparable<T>> {
         var nodesInReverse = new SamuelLinkedListStackQueue<BSTNode<T>>();
         stack.enqueue(this);
 
-        while (!stack.isEmpty()) {
+        while (!stack.isEmpty()) { // Results in a list where the nodes can be popped in a Post-Order.
             var node = stack.pop();
             nodesInReverse.enqueue(node);
             if (node.left != null)
@@ -127,7 +133,7 @@ public class BSTNode<T extends Comparable<T>> {
                 stack.enqueue(node.right);
         }
 
-        while (!nodesInReverse.isEmpty())
+        while (!nodesInReverse.isEmpty()) // Pop and print the reversed nodes
             System.out.print(nodesInReverse.pop().data + ", ");
     }
 
@@ -136,7 +142,7 @@ public class BSTNode<T extends Comparable<T>> {
         var node = this;
 
         while (!stack.isEmpty() || node != null) {
-            if (node != null) {
+            if (node != null) { // Push the left side of the left subtree unto the stack until encountering null
                 stack.enqueue(node);
                 node = node.left;
             } else {
@@ -162,17 +168,17 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     public BSTNode<T> find(T data) {
-        if (this.data == null)
+        if (this.data == null) // Empty tree
             return null;
         else if (data.compareTo(this.data) == 0)
             return this;
         else if (data.compareTo(this.data) < 0)
-            if (this.left == null)
+            if (this.left == null) // Doesn't exist
                 return null;
             else
                 return this.left.find(data);
         else
-            if (this.right == null)
+            if (this.right == null) // Doesn't exist
                 return null;
             else
                 return this.right.find(data);
@@ -195,11 +201,11 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     private int leftHeight() {
-        return this.left != null ? 1 + this.left.leftHeight() : -1;
+        return this.left != null ? 1 + this.left.leftHeight() : -1; // Return 1 + the height of the next left node or -1
     }
 
     private int rightHeight() {
-        return this.right != null ? 1 + this.right.rightHeight() : -1;
+        return this.right != null ? 1 + this.right.rightHeight() : -1; // Return 1 + the height of the next right node or -1
     }
 
 
@@ -212,14 +218,14 @@ public class BSTNode<T extends Comparable<T>> {
     }
     
     private void recursivePrint(String indentation, boolean isLeft) {
-        if (right != null) {
-            right.recursivePrint(indentation + (isLeft ? "│   " : "    "), false);
+        if (this.right != null) {
+            this.right.recursivePrint(indentation + (isLeft ? "│   " : "    "), false);
         }
 
         System.out.println(indentation + (isLeft ? "└── " : "┌── ") + data);
 
-        if (left != null) {
-            left.recursivePrint(indentation + (isLeft ? "    " : "│   "), true);
+        if (this.left != null) {
+            this.left.recursivePrint(indentation + (isLeft ? "    " : "│   "), true);
         }
     }
 

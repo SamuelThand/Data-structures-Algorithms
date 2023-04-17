@@ -13,7 +13,7 @@ public class AVLTreeNode<T extends Comparable<T>> {
     }
 
     public AVLTreeNode<T> insert(T data) {
-        if (this.data == null) {
+        if (this.data == null) { // Empty tree
             this.data = data;
             return this;
         }
@@ -24,15 +24,15 @@ public class AVLTreeNode<T extends Comparable<T>> {
 
     private AVLTreeNode<T> recursiveInsert(AVLTreeNode<T> node, T data) {
         if (node == null)
-            return new AVLTreeNode<>(data);
+            return new AVLTreeNode<>(data); // Create a new node once a null node is encountered.
 
         if (data.compareTo(node.data) <= 0)
-            node.left = recursiveInsert(node.left, data);
+            node.left = recursiveInsert(node.left, data); // Continue insertion down the left subtree
         else
-            node.right = recursiveInsert(node.right, data);
+            node.right = recursiveInsert(node.right, data); // Continue insertion down the right subtree
 
-        node.height = calculateHeight(node);
-        return doBalancing(node, calculateBalance(node));
+        node.height = calculateHeight(node); // Update the height of the node
+        return doBalancing(node, calculateBalance(node)); // Do any balancing if neccesary
     }
 
     public AVLTreeNode<T> remove(T data) {
@@ -43,17 +43,17 @@ public class AVLTreeNode<T extends Comparable<T>> {
         if (node == null)
             return null;
         else if (data.compareTo(node.data) < 0)
-            node.left = recursiveRemove(node.left, data);
+            node.left = recursiveRemove(node.left, data); // Recursive call down the left subtree
         else if (data.compareTo(node.data) > 0)
-            node.right = recursiveRemove(node.right, data);
+            node.right = recursiveRemove(node.right, data); // Recursive call down the right subtree
         else {
-            if (node.left == null && node.right == null)
+            if (node.left == null && node.right == null) // No children
                 return null;
-            else if (node.left == null)
+            else if (node.left == null) // 1 child
                 return node.right;
-            else if (node.right == null)
+            else if (node.right == null) // 1 child
                 return node.left;
-            else {
+            else { // 2 children
                 node.data = findSubtreeMinimumValue(node.left);
                 node.left = recursiveRemove(node.left, node.data);
             }
@@ -68,19 +68,19 @@ public class AVLTreeNode<T extends Comparable<T>> {
     }
 
     private AVLTreeNode<T> doBalancing(AVLTreeNode<T> node, int balance) {
-        // Left-heavy tree
+        // Left-heavy unbalanced tree
         if (balance > 1)
-            if (calculateBalance(node.left) >= 0) // node would be in right subtree of the right child of the unbalanced node
+            if (calculateBalance(node.left) >= 0) // Left-Left case: The subtree of the node's left child is left-weighted
                 return rotateRight(node);
             else
-                return rotateLeftRight(node); // node would be in right subtree of left child of unbalanced node
+                return rotateLeftRight(node); // Left-Right case: The subtree of the node's left child is right-weighted
 
-        // Right-heavy tree
+        // Right-heavy unbalanced tree
         else if (balance < -1)
-            if (calculateBalance(node.right) <= 0)  // node would be in left subtree of the left child of the unbalanced node
+            if (calculateBalance(node.right) <= 0)  // Right-Right case: The subtree of the node's right child is right-weighted
                 return rotateLeft(node);
             else
-                return rotateRightLeft(node); // node would be in left subtree of right child of unbalanced node
+                return rotateRightLeft(node); // Right-Left case: The subtree of the node's right child is left-weighted
 
         // Balanced tree
         return node;
@@ -98,10 +98,11 @@ public class AVLTreeNode<T extends Comparable<T>> {
     }
 
     private AVLTreeNode<T> rotateLeft(AVLTreeNode<T> node) {
-        var root = node.right;
-        node.right = root.left;
-        root.left = node;
+        var root = node.right; // Make the node's right child the new root of the subtree.
+        node.right = root.left; // Replace the node's right child with the left child of the new root.
+        root.left = node; // Replace the left child of the new root with the node.
 
+        // Update the height of both the new root and the node.
         node.height = calculateHeight(node);
         root.height = calculateHeight(root);
 
@@ -109,10 +110,11 @@ public class AVLTreeNode<T extends Comparable<T>> {
     }
 
     private AVLTreeNode<T> rotateRight(AVLTreeNode<T> node) {
-        var root = node.left;
-        node.left = root.right;
-        root.right = node;
+        var root = node.left; // Making the left child of the node the new root of the subtree.
+        node.left = root.right; // Replacing the node's left child with the right child of the new root.
+        root.right = node; // Replacing the right child of the new root with the node.
 
+        // Updating the height of both the new root and the node.
         node.height = calculateHeight(node);
         root.height = calculateHeight(root);
 
@@ -120,7 +122,7 @@ public class AVLTreeNode<T extends Comparable<T>> {
     }
 
     private int calculateHeight(AVLTreeNode<T> node) {
-        return 1 + Math.max(getHeight(node.left), getHeight(node.right));
+        return 1 + Math.max(getHeight(node.left), getHeight(node.right)); // Height will be 0 for single node, -1 for empty tree, etc.
     }
 
     public AVLTreeNode<T> find(T data) {
@@ -165,7 +167,6 @@ public class AVLTreeNode<T extends Comparable<T>> {
 
         return count;
     }
-
 
     public void print() {
         recursivePrint("", true);

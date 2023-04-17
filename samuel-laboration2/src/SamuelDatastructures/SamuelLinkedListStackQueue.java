@@ -35,7 +35,7 @@ public class SamuelLinkedListStackQueue<T> {
 
         T data = this.head.getItem();
         this.head = this.head.getNextNode();
-        if (this.head == null)
+        if (this.head == null) // If list gets emptied, set tail to null as well
             this.tail = null;
         else
             this.head.setPreviousNode(null);
@@ -50,7 +50,7 @@ public class SamuelLinkedListStackQueue<T> {
 
         T data = this.tail.getItem();
         this.tail = this.tail.getPreviousNode();
-        if (this.tail == null)
+        if (this.tail == null) // If list gets emptied, set tail to null as well
             this.head = null;
         else
             this.tail.setNextNode(null);

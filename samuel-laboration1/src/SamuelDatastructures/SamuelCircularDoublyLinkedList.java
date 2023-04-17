@@ -37,7 +37,7 @@ public class SamuelCircularDoublyLinkedList {
                 if (currentNode == this.head) { // New node becomes head, tail points to head
                     this.head = node;
                     this.tail.setNextNode(node);
-                } else // Precious node set to point to the new node
+                } else // Previous node set to point to the new node
                     currentNode.getPreviousNode().setNextNode(node);
 
                 // Relinking the node to be included in the structure behind currentNode.
