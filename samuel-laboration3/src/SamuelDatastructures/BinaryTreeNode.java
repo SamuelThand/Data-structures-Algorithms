@@ -34,9 +34,9 @@ public class BinaryTreeNode<T extends Comparable<T>> {
     }
 
     public boolean isCompleteTree() {
-        var queue = new SamuelLinkedListStackQueue<BinaryTreeNode<T>>();
+        var queue = new SLinkedList<BinaryTreeNode<T>>();
         boolean missingNode = false;
-        queue.enqueue(this);
+        queue.insertAtTail(this);
 
         while (!queue.isEmpty()) { // Breadth first traversal
             var node = queue.deque();
@@ -45,7 +45,7 @@ public class BinaryTreeNode<T extends Comparable<T>> {
                 if (missingNode) // Node with a missing child was encountered before the last node - incomplete
                     return false;
                 else
-                    queue.enqueue(node.left);
+                    queue.insertAtTail(node.left);
             } else
                 missingNode = true;
 
@@ -53,7 +53,7 @@ public class BinaryTreeNode<T extends Comparable<T>> {
                 if (missingNode) // Node with a missing child was encountered before the last node - incomplete
                     return false;
                 else
-                    queue.enqueue(node.right);
+                    queue.insertAtTail(node.right);
             } else
                 missingNode = true;
 

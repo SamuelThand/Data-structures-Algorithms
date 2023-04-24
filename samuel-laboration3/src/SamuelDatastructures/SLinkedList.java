@@ -1,18 +1,18 @@
 package SamuelDatastructures;
 
-public class SamuelLinkedListStackQueue<T> {
+public class SLinkedList<T> {
 
     private ListNode<T> head;
     private ListNode<T> tail;
     private int size;
 
-    SamuelLinkedListStackQueue() {
+    SLinkedList() {
         this.head = null;
         this.tail = null;
         this.size = 0;
     }
 
-    public void enqueue(T item) {
+    public void insertAtTail(T item) {
         var node = new ListNode<>(item);
 
         if (this.isEmpty()) {
@@ -58,6 +58,57 @@ public class SamuelLinkedListStackQueue<T> {
         this.size--;
         return data;
     }
+
+    public boolean remove(T item) {
+        if (isEmpty())
+            return false;
+
+        var currentNode = this.head;
+
+        // The item is in the head
+        if (currentNode.getItem().equals(item)) {
+            this.head = head.getNextNode();
+            if (head == null) // If head becomes null, the list is empty and tail should also be null
+                tail = null;
+            else
+                head.setPreviousNode(null);
+            size--;
+            return true;
+        }
+
+        while (currentNode != null) {
+            if (currentNode.getItem().equals(item)) { // Match
+                var previous = currentNode.getPreviousNode();
+                var next = currentNode.getNextNode();
+
+                //Remove by relinking
+                if (previous != null)
+                    previous.setNextNode(next);
+                if (next != null)
+                    next.setPreviousNode(previous);
+                if (currentNode == tail) // The item is in the tail
+                    tail = previous;
+                size--;
+                return true;
+            }
+
+            currentNode = currentNode.getNextNode();
+        }
+
+        return false;
+    }
+
+    public boolean contains(T item) {
+        var currentNode = this.head;
+        while (currentNode != null) {
+            if (currentNode.getItem().equals(item))
+                return true;
+
+            currentNode = currentNode.getNextNode();
+        }
+        return false;
+    }
+
 
     public int size() {
         return size;
