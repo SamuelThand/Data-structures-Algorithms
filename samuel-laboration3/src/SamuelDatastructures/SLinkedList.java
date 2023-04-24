@@ -1,15 +1,38 @@
 package SamuelDatastructures;
 
-public class SLinkedList<T> {
+import java.util.Iterator;
+
+public class SLinkedList<T> implements Iterable<T> {
+
+    private class SLinkedListIter implements Iterator<T> {
+        private ListNode<T> current = head;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public T next() {
+            T item = current.getItem();
+            current = current.getNextNode();
+            return item;
+        }
+    }
 
     private ListNode<T> head;
     private ListNode<T> tail;
     private int size;
 
-    SLinkedList() {
+    public SLinkedList() {
         this.head = null;
         this.tail = null;
         this.size = 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new SLinkedListIter();
     }
 
     public void insertAtTail(T item) {
@@ -80,8 +103,8 @@ public class SLinkedList<T> {
             if (currentNode.getItem().equals(item)) { // Match
                 var previous = currentNode.getPreviousNode();
                 var next = currentNode.getNextNode();
-
                 //Remove by relinking
+
                 if (previous != null)
                     previous.setNextNode(next);
                 if (next != null)
