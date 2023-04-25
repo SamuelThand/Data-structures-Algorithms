@@ -18,7 +18,7 @@ public class Q2 {
         var userInput = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Enter a word: ");
+            System.out.printf("Enter a word: ");
 
             var enteredWord = userInput.nextLine().toLowerCase();
             var nearMisses = checkNearMisses(enteredWord, hashTable);
@@ -28,10 +28,12 @@ public class Q2 {
 
             else if (!nearMisses.isEmpty()) {
 
+                System.out.println("Did you mean: ");
                 var iter = nearMisses.iterator();
                 do
                     System.out.println(iter.next());
                 while (iter.hasNext());
+                System.out.println();
             }
 
             else
@@ -86,7 +88,9 @@ public class Q2 {
         return true;
     }
 
+    //Todo refactor
     private static SLinkedList<String> checkNearMisses(String word, SamuelOpenHashTable hashTable) {
+
         var nearMisses = new SLinkedList<String>();
 
         // Remove 1 character
@@ -107,23 +111,57 @@ public class Q2 {
                 nearMisses.insertAtTail(next);
         } while (missingCharIter.hasNext());
 
+        // Swap two characters
+        var swapCharVariations = swapChar(word);
+        var swapCharIter = swapCharVariations.iterator();
+        do {
+            var next = swapCharIter.next();
+            if (hashTable.contains(next))
+                nearMisses.insertAtTail(next);
+        } while (swapCharIter.hasNext());
+
 
         return nearMisses;
+
     }
+
+//    public static SLinkedList<String> testVariations(SLinkedList variations) {
+//
+//
+//
+//        //returnera nearmisses
+//
+//    }
 
     private static SLinkedList<String> surplusChar(String word) {
         var variations = new SLinkedList<String>();
-        for (int i = 0; i < word.length(); i++)
-            variations.insertAtTail(word.substring(0, i) + word.substring(i + 1));
+        for (int i = 0; i < word.length(); i++) {
+            var variation = word.substring(0, i) + word.substring(i + 1);
+            if (!variations.contains(variation))
+                variations.insertAtTail(variation);
+        }
         return variations;
     }
 
     private static SLinkedList<String> missingChar(String word) {
         var variations = new SLinkedList<String>();
         for (int i = 0; i <= word.length(); i++)
-            for (char character = 'a'; character <= 'z'; character++) {
+            for (char character = 'a'; character <= 'z'; character++)
                 variations.insertAtTail(word.substring(0, i) + character + word.substring(i));
-            }
+
+        return variations;
+    }
+
+    private static SLinkedList<String> swapChar(String word) {
+        var variations = new SLinkedList<String>();
+        for (int i = 0; i < word.length() - 1; i++) {
+            var characters = word.toCharArray();
+            var firstChar = characters[i];
+            var secondChar = characters[i + 1];
+            characters[i] = secondChar;
+            characters[i + 1] = firstChar;
+            variations.insertAtTail(new String(characters));
+        }
 
         return variations;
     }
