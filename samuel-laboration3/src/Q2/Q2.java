@@ -17,35 +17,47 @@ public class Q2 {
         var hashTable = loadWords();
         var userInput = new Scanner(System.in);
 
+        System.out.println("Welcome to the dictionary. Type 'Q! or q!' to quit.\n");
         while (true) {
-            System.out.printf("Enter a word: ");
+            System.out.print("Enter a word: ");
+            var enteredWord = userInput.nextLine().trim().toLowerCase();
 
-            var enteredWord = userInput.nextLine().toLowerCase();
-            var nearMisses = checkNearMisses(enteredWord, hashTable);
+            if (enteredWord.equals("q!"))
+                break;
+            else if (enteredWord.isEmpty() || !(enteredWord.matches("[a-z ']+"))) {
+                System.out.println("Invalid input");
+                continue;
+            }
 
-            if (hashTable.contains(enteredWord))
+            if (hashTable.contains(enteredWord)) {
                 System.out.println("Exists");
+                continue;
+            }
 
-            else if (!nearMisses.isEmpty()) {
-
+            var nearMisses = checkNearMisses(enteredWord, hashTable);
+            if (!nearMisses.isEmpty()) {
                 System.out.println("Did you mean: ");
                 var iter = nearMisses.iterator();
                 do
                     System.out.println(iter.next());
                 while (iter.hasNext());
                 System.out.println();
-            }
-
-            else
-                System.out.println("Not exist");
+            } else
+                System.out.println("Not found");
         }
     }
 
     private static SamuelOpenHashTable loadWords() {
         var dictionary = readFile("samuel-laboration3/src/Q2/words");
 
+        if (dictionary == null || !dictionary.hasNextLine()) {
+            System.out.println("Empty file");
+            System.exit(1);
+        }
+
         int lines = 0;
         var words = new SLinkedList<String>();
+
         while (dictionary.hasNextLine()) {
             words.insertAtTail(dictionary.nextLine().toLowerCase());
             lines++;
@@ -65,7 +77,8 @@ public class Q2 {
             return new Scanner(new File(path));
 
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            System.out.println("File was not found");
+            System.exit(1);
         }
 
         return null;
@@ -88,7 +101,6 @@ public class Q2 {
         return true;
     }
 
-    //Todo refactor
     private static SLinkedList<String> checkNearMisses(String word, SamuelOpenHashTable hashTable) {
 
         var nearMisses = new SLinkedList<String>();
@@ -112,26 +124,42 @@ public class Q2 {
         } while (missingCharIter.hasNext());
 
         // Swap two characters
-        var swapCharVariations = swapChar(word);
-        var swapCharIter = swapCharVariations.iterator();
+        if (word.length() > 1) {
+            var swapCharVariations = swapChar(word);
+            var swapCharIter = swapCharVariations.iterator();
+            do {
+                var next = swapCharIter.next();
+                if (hashTable.contains(next))
+                    nearMisses.insertAtTail(next);
+            } while (swapCharIter.hasNext());
+        }
+
+        // Replace a character
+        var replaceCharVariations = replaceChar(word);
+        var replaceCharIter = replaceCharVariations.iterator();
         do {
-            var next = swapCharIter.next();
+            var next = replaceCharIter.next();
             if (hashTable.contains(next))
                 nearMisses.insertAtTail(next);
-        } while (swapCharIter.hasNext());
+        } while (replaceCharIter.hasNext());
 
+        // Add a space character
+        if (word.length() > 1 && !(word.contains(" "))) {
+            var spaceVariations = insertSpace(word);
+            var spaceIter = spaceVariations.iterator();
+            do {
+                var next = spaceIter.next();
+                var firstPart = next.split(" ")[0];
+                var secondPart = next.split(" ")[1];
+                if (hashTable.contains(firstPart))
+                    nearMisses.insertAtTail(firstPart);
+                if (hashTable.contains(secondPart))
+                    nearMisses.insertAtTail(secondPart);
+            } while (spaceIter.hasNext());
+        }
 
         return nearMisses;
-
     }
-
-//    public static SLinkedList<String> testVariations(SLinkedList variations) {
-//
-//
-//
-//        //returnera nearmisses
-//
-//    }
 
     private static SLinkedList<String> surplusChar(String word) {
         var variations = new SLinkedList<String>();
@@ -145,9 +173,24 @@ public class Q2 {
 
     private static SLinkedList<String> missingChar(String word) {
         var variations = new SLinkedList<String>();
-        for (int i = 0; i <= word.length(); i++)
+        for (int i = 0; i <= word.length(); i++) {
             for (char character = 'a'; character <= 'z'; character++)
                 variations.insertAtTail(word.substring(0, i) + character + word.substring(i));
+
+            variations.insertAtTail(word.substring(0, i) + "'" + word.substring(i));
+        }
+
+        return variations;
+    }
+
+    private static SLinkedList<String> replaceChar(String word) {
+        var variations = new SLinkedList<String>();
+        for (int i = 0; i < word.length(); i++) {
+            for (char character = 'a'; character <= 'z'; character++)
+                variations.insertAtTail(word.substring(0, i) + character + word.substring(i + 1));
+
+        variations.insertAtTail(word.substring(0, i) + "'" + word.substring(i + 1));
+        }
 
         return variations;
     }
@@ -166,6 +209,11 @@ public class Q2 {
         return variations;
     }
 
+    private static SLinkedList<String> insertSpace(String word) {
+        var variations = new SLinkedList<String>();
+        for (int i = 1; i < word.length(); i++)
+                variations.insertAtTail(word.substring(0, i) + " " + word.substring(i));
 
-
+        return variations;
+    }
 }
