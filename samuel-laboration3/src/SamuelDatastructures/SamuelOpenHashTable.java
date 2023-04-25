@@ -14,7 +14,6 @@ public class SamuelOpenHashTable {
     }
 
     public void add(String word) {
-        System.out.println("inserting " + word);
         int index = hash(word);
         if (!this.table[index].contains(word)) {
             this.table[index].insertAtTail(word);

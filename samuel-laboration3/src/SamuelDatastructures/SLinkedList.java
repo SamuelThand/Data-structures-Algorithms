@@ -41,8 +41,9 @@ public class SLinkedList<T> implements Iterable<T> {
         if (this.isEmpty()) {
             this.head = node;
             this.tail = node;
-            node.setNextNode(node);
-            node.setPreviousNode(node);
+            node.setNextNode(null);
+            node.setPreviousNode(null);
+
         } else {
             this.tail.setNextNode(node);
             node.setPreviousNode(this.tail);

@@ -6,14 +6,15 @@ import SamuelDatastructures.SamuelOpenHashTable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import static java.lang.Math.sqrt;
 
 public class Q2 {
 
+    private static final double hashTableLoadFactor = 0.75;
+
     public static void main(String[] args) {
 
-
-//        var dictionary = readFile("samuel-laboration3/src/Q2/words");
-        var dictionary = readFile("samuel-laboration3/src/Q2/shortwords");
+        var dictionary = readFile("samuel-laboration3/src/Q2/words");
 
         int lines = 0;
         var words = new SLinkedList<String>();
@@ -22,13 +23,10 @@ public class Q2 {
             lines++;
         }
 
-        var hashTable = new SamuelOpenHashTable(100000);
+        var hashTable = new SamuelOpenHashTable(calculateTableSize(lines)); //TODO appropriate size
         var iterator = words.iterator();
         do
-//            System.out.println(iterator.next());
             hashTable.add(iterator.next());
-//            System.out.println(iterator.next());
-
         while (iterator.hasNext());
 
         System.out.println(hashTable.contains("épée"));
@@ -45,5 +43,25 @@ public class Q2 {
 
         return null;
     }
+
+    private static int calculateTableSize(int words) {
+        var size = (int) Math.ceil(words / hashTableLoadFactor);
+        while (true)
+            if (isPrimeNumber(size))
+                return size;
+            else
+                size++;
+    }
+
+    private static boolean isPrimeNumber(int number)
+    {
+        for (int i = 2; i < sqrt(number); i++)
+            if (number % i == 0)
+                return false;
+
+        return true;
+    }
+
+
 
 }
