@@ -7,29 +7,6 @@ public class THBinaryTree<T extends Comparable<T>> {
         this.root = new Node<>(item);
     }
 
-    public boolean checkBalance() {
-        return checkBalance(root);
-    }
-
-    private boolean checkBalance(Node<T> node) {
-        if (node == null) {
-            return true;
-        }
-        int leftHeight = height(node.left);
-        int rightHeight = height(node.right);
-        if (Math.abs(leftHeight - rightHeight) > 1) {
-            return false;
-        }
-        return checkBalance(node.left) && checkBalance(node.right);
-    }
-
-    public int height(Node<T> node) {
-        if (node == null) {
-            return 0;
-        }
-        return 1 + Math.max(height(node.left), height(node.right));
-    }
-
     public void print() {
         System.out.println();
         print(root, 0);
@@ -72,6 +49,14 @@ public class THBinaryTree<T extends Comparable<T>> {
 
         public Node<T> setRight(T item) {
             return this.right = new Node<>(item);
+        }
+
+        public Node<T> getLeft() {
+            return left;
+        }
+
+        public Node<T> getRight() {
+            return right;
         }
 
         public void setItem(T item) {
