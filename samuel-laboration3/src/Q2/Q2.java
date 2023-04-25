@@ -90,23 +90,41 @@ public class Q2 {
         var nearMisses = new SLinkedList<String>();
 
         // Remove 1 character
-        var missingCharVariations = missingChar(word);
-
-        var missingCharIter = missingCharVariations.iterator();
+        var surplusCharVariations = surplusChar(word);
+        var surplusCharIter = surplusCharVariations.iterator();
         do {
-           var next = missingCharIter.next();
+           var next = surplusCharIter.next();
            if (hashTable.contains(next))
                nearMisses.insertAtTail(next);
+        } while (surplusCharIter.hasNext());
+
+        // Add 1 character
+        var missingCharVariations = missingChar(word);
+        var missingCharIter = missingCharVariations.iterator();
+        do {
+            var next = missingCharIter.next();
+            if (hashTable.contains(next))
+                nearMisses.insertAtTail(next);
         } while (missingCharIter.hasNext());
 
 
         return nearMisses;
     }
 
-    private static SLinkedList<String> missingChar(String word) {
+    private static SLinkedList<String> surplusChar(String word) {
         var variations = new SLinkedList<String>();
         for (int i = 0; i < word.length(); i++)
             variations.insertAtTail(word.substring(0, i) + word.substring(i + 1));
+        return variations;
+    }
+
+    private static SLinkedList<String> missingChar(String word) {
+        var variations = new SLinkedList<String>();
+        for (int i = 0; i <= word.length(); i++)
+            for (char character = 'a'; character <= 'z'; character++) {
+                variations.insertAtTail(word.substring(0, i) + character + word.substring(i));
+            }
+
         return variations;
     }
 
