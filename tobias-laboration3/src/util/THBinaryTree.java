@@ -25,15 +25,15 @@ public class THBinaryTree<T extends Comparable<T>> {
     }
 
     public static class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
-        public T item;
-        public Node<T> left;
-        public Node<T> right;
+        private T item;
+        private Node<T> left;
+        private Node<T> right;
 
-        Node(T item) {
+        private Node(T item) {
             this(item, null, null);
         }
 
-        Node(T item, Node<T> left, Node<T> right) {
+        private Node(T item, Node<T> left, Node<T> right) {
             this.item = item;
             this.left = left;
             this.right = right;

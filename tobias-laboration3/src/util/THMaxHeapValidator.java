@@ -6,7 +6,9 @@ public class THMaxHeapValidator<T extends Comparable<T>> {
      * Checks if the tree is a max heap. To be max heap, the root must be larger than both children and the
      * tree must be complete, i.e. all levels must be filled except the last level, which must be filled
      * from left to right.
+     *
      * @param tree tree to check
+     *
      * @return true if the tree is a max heap
      */
     public boolean isMaxHeap(THBinaryTree<T> tree) {
@@ -24,10 +26,11 @@ public class THMaxHeapValidator<T extends Comparable<T>> {
             return true;
         }
 
-        if (ltLeftChild(node)) {
+        if (ltLeftChild(node)) {  // left child is larger than parent
             System.out.printf("Left child (%s) is larger than parent (%s)\n", node.getLeft(), node);
             return false;
-        } if (ltRightChild(node)) {
+        }
+        if (ltRightChild(node)) {  // right child is larger than parent
             System.out.printf("Right child (%s) is larger than parent (%s)\n", node.getRight(), node);
             return false;
         }
@@ -38,8 +41,10 @@ public class THMaxHeapValidator<T extends Comparable<T>> {
     /**
      * Checks if the tree is complete, i.e. all levels must be filled except the last level, which must be filled
      * from left to right.
-     * @param node node
+     *
+     * @param node  node
      * @param level level
+     *
      * @return -1 if the tree is not complete
      */
     private int followsMaxHeapStructure(THBinaryTree.Node<T> node, int level) {
@@ -63,12 +68,13 @@ public class THMaxHeapValidator<T extends Comparable<T>> {
         }
 
         return leftLevel;
-
     }
 
     /**
      * Checks if the node is smaller than its right child.
+     *
      * @param node node
+     *
      * @return true if the node is smaller than its right child
      */
     private boolean ltRightChild(final THBinaryTree.Node<T> node) {
@@ -77,7 +83,9 @@ public class THMaxHeapValidator<T extends Comparable<T>> {
 
     /**
      * Checks if the node is smaller than its left child.
+     *
      * @param node node
+     *
      * @return true if the node is smaller than its left child
      */
     private boolean ltLeftChild(final THBinaryTree.Node<T> node) {
