@@ -15,14 +15,13 @@ public class Q2 {
     public static void main(String[] args) {
 
         var hashTable = loadWords();
-
         var userInput = new Scanner(System.in);
 
         while (true) {
             System.out.println("Enter a word: ");
 
             var enteredWord = userInput.nextLine().toLowerCase();
-            var nearMisses = checkNearMisses(enteredWord);
+            var nearMisses = checkNearMisses(enteredWord, hashTable);
 
             if (hashTable.contains(enteredWord))
                 System.out.println("Exists");
@@ -31,19 +30,13 @@ public class Q2 {
 
                 var iter = nearMisses.iterator();
                 do
-                    System.out.println("a");
+                    System.out.println(iter.next());
                 while (iter.hasNext());
             }
 
             else
                 System.out.println("Not exist");
         }
-    }
-
-    private static SLinkedList checkNearMisses(String word) {
-        var nearMisses = new SLinkedList<String>();
-
-        return nearMisses;
     }
 
     private static SamuelOpenHashTable loadWords() {
@@ -85,13 +78,36 @@ public class Q2 {
                 size++;
     }
 
-    private static boolean isPrimeNumber(int number)
-    {
+    private static boolean isPrimeNumber(int number) {
         for (int i = 2; i < sqrt(number); i++)
             if (number % i == 0)
                 return false;
 
         return true;
+    }
+
+    private static SLinkedList<String> checkNearMisses(String word, SamuelOpenHashTable hashTable) {
+        var nearMisses = new SLinkedList<String>();
+
+        // Remove 1 character
+        var missingCharVariations = missingChar(word);
+
+        var missingCharIter = missingCharVariations.iterator();
+        do {
+           var next = missingCharIter.next();
+           if (hashTable.contains(next))
+               nearMisses.insertAtTail(next);
+        } while (missingCharIter.hasNext());
+
+
+        return nearMisses;
+    }
+
+    private static SLinkedList<String> missingChar(String word) {
+        var variations = new SLinkedList<String>();
+        for (int i = 0; i < word.length(); i++)
+            variations.insertAtTail(word.substring(0, i) + word.substring(i + 1));
+        return variations;
     }
 
 
