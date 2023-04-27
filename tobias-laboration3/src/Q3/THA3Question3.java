@@ -28,7 +28,7 @@ public class THA3Question3 {
         switch (sortType) {
             case "first" -> comparisons = sorter.quicksortFirst(array);
             case "median" -> comparisons = sorter.quicksortMedian(array);
-            case "last" -> comparisons = sorter.quicksortRandom(array);
+            case "random" -> comparisons = sorter.quicksortRandom(array);
             default -> throw new RuntimeException("Invalid sort type.");
         }
 
