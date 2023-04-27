@@ -38,9 +38,15 @@ public class Q2 {
             if (!nearMisses.isEmpty()) {
                 System.out.println("Did you mean: ");
                 var iter = nearMisses.iterator();
-                do
-                    System.out.println(iter.next());
-                while (iter.hasNext());
+                boolean first = true;
+                do {
+                    if (first)
+                        first = false;
+                    else
+                        System.out.print(", ");
+                    System.out.printf("%s", iter.next());
+                } while (iter.hasNext());
+                System.out.println();
                 System.out.println();
             } else
                 System.out.println("Not found");
