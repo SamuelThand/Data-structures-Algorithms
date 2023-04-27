@@ -115,15 +115,14 @@ public class BinaryTreeNode<T extends Comparable<T>> {
     }
 
     private void recursivePrint(String indentation, boolean isLeft) {
-        if (this.right != null) {
+        if (this.right != null)
             this.right.recursivePrint(indentation + (isLeft ? "│   " : "    "), false);
-        }
 
         System.out.println(indentation + (isLeft ? "└── " : "┌── ") + data);
 
-        if (this.left != null) {
+        if (this.left != null)
             this.left.recursivePrint(indentation + (isLeft ? "    " : "│   "), true);
-        }
+
     }
 
 }

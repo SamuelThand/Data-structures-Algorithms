@@ -33,7 +33,7 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     private BSTNode<T> recursiveRemove(BSTNode<T> node, T data) {
-        if (node == null)
+        if (node == null) // Data not found
             return null;
         else if (data.compareTo(node.data) < 0)
             node.left = recursiveRemove(node.left, data); // Recursive call down the left subtree
@@ -41,17 +41,17 @@ public class BSTNode<T extends Comparable<T>> {
             node.right = recursiveRemove(node.right, data); // Recursive call down the right subtree
         else {
 
-            // Case 1: Node has no children
+            // Case 1: Node has no children, just remove it by returning null
             if (node.left == null && node.right == null)
                 return null;
 
-            // Case 2: Node has 1 child
+            // Case 2: Node has 1 child, node removed by returning its only child to replace the old node
             else if (node.left == null)
                 return node.right;
             else if (node.right == null)
                 return node.left;
 
-            //Case 3: Node as 2 children
+            //Case 3: Node as 2 children, find in-order predecessor and replace node with it. Then remove it by recursive call down the subtree.
             else {
                 node.data = findSubtreeMinimumValue(node.left);
                 node.left = recursiveRemove(node.left, node.data);
