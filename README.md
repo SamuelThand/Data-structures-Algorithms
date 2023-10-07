@@ -69,3 +69,45 @@ Question 4: AVL Tree vs. Binary Search Tree
     during insertions and deletions. 
     B: Compare the AVL tree with the binary search tree from the previous question, noting 
     speed differences and conditions where one might be faster than the other.
+
+# Assignment 3
+
+Question 1: Max-Heap Validation in Binary Trees
+
+    Determine if a given binary tree satisfies the max-heap properties:
+        The tree is complete (all levels, except possibly the last, are fully populated).
+        Every node's value is ≥ its child node.
+    Create a program to verify whether a provided binary tree is a max-heap.
+
+Question 2: ispell Utility Implementation with Hash Tables
+
+    ispell is a Linux utility for interactive word checks. 
+    Your goal is to replicate its functionalities using hash tables.
+
+    Part I - ADT:
+
+        Develop a class implementing an Open Hash Table of strings stored as arrays of linked lists.
+            Methods:
+                add(s)
+                remove(s)
+                contains(s)
+                size()
+                A hash function for string hashing.
+
+    Part II – Main Program:
+
+        Utilize your hash table class.
+        Use /usr/share/dict/words or this file as the dictionary.
+        Construct and check all possible near misses for input words.
+        Display results in alphabetical order.
+        Consider case insensitivity.
+
+Question 3: Variants of Quicksort Algorithm
+
+    Implement three variations of Quicksort: First, Median, and Random.
+    Quicksort, First: Always pick the first element as the pivot.
+    Quicksort, Median: Choose the median of the first, final, and middle elements as the pivot.
+    Quicksort, Random: Randomly select the pivot.
+    Accept two command-line arguments: filename and Quicksort variant.
+    Depending on the chosen variant, execute the corresponding Quicksort algorithm.
+    Output the total number of comparisons done by the Partition procedure.
