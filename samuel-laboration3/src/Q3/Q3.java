@@ -78,6 +78,7 @@ public class Q3 {
 
             boolean middleElementIsMedian = (numbers[leftIndex] <= numbers[middleIndex] && numbers[middleIndex] <= numbers[rightIndex])
                     || (numbers[rightIndex] <= numbers[middleIndex] && numbers[middleIndex] <= numbers[leftIndex]);
+
             boolean leftElementIsMedian = (numbers[middleIndex] <= numbers[leftIndex] && numbers[leftIndex] <= numbers[rightIndex])
                     || (numbers[rightIndex] <= numbers[leftIndex] && numbers[leftIndex] <= numbers[middleIndex]);
 
